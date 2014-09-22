@@ -25,5 +25,5 @@ ressources.data.sncf.com/explore/dataset/sncf-prochains-departs-transilien
 ressources.data.sncf.com/explore/dataset/sncf-micro-services
 
 * Permet de calculer le plus court chemin à pieds/vélo/voiture entre deux coordonnées :
-gmap3.net
+gmap3.net ou jquery-ui-map
 
