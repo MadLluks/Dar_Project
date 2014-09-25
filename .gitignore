@@ -1,0 +1,5 @@
+# Don't know if we will modify foundation core
+# /bower_components/*
+/.sass-cache/*
+*.DS_Store
+/stylesheets/*
