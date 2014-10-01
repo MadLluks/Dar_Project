@@ -3,6 +3,10 @@ Dar_Project
 
 Students web project
 
+Installation
+------------
+
+Lancer install.sh pour installer les dépendances
 
 Technos
 -------
