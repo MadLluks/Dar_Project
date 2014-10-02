@@ -8,5 +8,6 @@
 </head>
 <body>
 <p><h1>Initial index</h1></p>
+<p>${ empty message ? "Pas de message" : message }</p>
 </body>
 </html>
