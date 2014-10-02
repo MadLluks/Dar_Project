@@ -1,4 +1,4 @@
-package com.dar;
+package com.dar.servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
