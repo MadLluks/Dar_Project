@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Accueil</title>
+<title>Login</title>
 </head>
 <body>
-<p><h1>Initial index</h1></p>
+<h1>Login page</h1>
 </body>
 </html>
