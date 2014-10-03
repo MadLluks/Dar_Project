@@ -59,7 +59,6 @@ public class DBConnect {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			res = false;
-			
 		}
 		return res;
 	}

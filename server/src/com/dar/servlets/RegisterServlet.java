@@ -75,5 +75,4 @@ public class RegisterServlet extends HttpServlet {
 		out.flush();
 		conn.close();
 	}
-
 }
