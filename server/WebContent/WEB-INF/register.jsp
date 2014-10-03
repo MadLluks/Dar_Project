@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<h1>Register page</h1>
+<form method="POST" action="register">
+	<label for="login">Login :</label>
+	<input name="login" type="text" width="150" />
+	<label for="password">Password :</label>
+	<input name="password" type="password" width="150" />
+	<input type="submit" value="Register" />
+</form>
 </body>
 </html>
