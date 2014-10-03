@@ -31,14 +31,30 @@ public class DBConnect {
         }
     }
 	
+	public boolean registerUser(String login, String password){
+		boolean res = true;
+		PreparedStatement prestmt;
+		try{
+			prestmt = this.connection
+				.prepareStatement("insert into user values(?, ?)");
+			prestmt.setString(1, login);
+			prestmt.setString(2, password);
+			prestmt.execute();
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+	
 	public boolean isUserRegistered(String login, String password){
 		PreparedStatement prestmt;
 		boolean res;
 		try {
 			prestmt = this.connection
-					.prepareStatement("select * from user where login = ? and password = ? ");
+					.prepareStatement("select * from user where login = ?");
 			prestmt.setString(1, login);
-			prestmt.setString(2, password);
 			res = prestmt.executeQuery().next();
 		} catch (SQLException e) {
 			e.printStackTrace();
