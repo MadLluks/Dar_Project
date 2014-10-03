@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dar.beans.User;
+import com.dar.metier.DBConnect;
 
 
 /**
@@ -45,23 +46,30 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		String login,password;
+		String jsonResponse = "";
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		try{
 			login = request.getParameter("login");
 			password = request.getParameter("password");
-		}catch(Exception e)
-	    {
-			out.print("{success : false, error : wrong_credentials}");
+		}
+		catch(Exception e){
+			out.print("{success : false, error : missing_parameter}");
+			out.flush();
 			return;
 	    }
-		User user = new User();
-		user.setLogin(login);
-		request.getSession().setAttribute("user", user);
-	
-		// TODO: validate credentials
-				
+		DBConnect conn = new DBConnect(getServletContext().getRealPath("/") + "/WEB-INF/dar.db");
+		conn.connect();
+		if(conn.isUserRegistered(login, password)){
+			User user = new User();
+			user.setLogin(login);
+			request.getSession().setAttribute("user", user);
+			jsonResponse = "{success : true}";
+		}
+		else
+			jsonResponse = "{success : false, error : wrong_credentials}";
+		out.print(jsonResponse);
 		out.flush();
+		conn.close();
 	}
-
 }
