@@ -14,22 +14,22 @@ public class DBConnect {
 	
 	public void connect(){
 		try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
-        } catch (ClassNotFoundException notFoundException) {
-            notFoundException.printStackTrace();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
+		} catch (ClassNotFoundException notFoundException) {
+			notFoundException.printStackTrace();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		}
 	}
 	
 	public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public boolean registerUser(String login, String password){
 		boolean res = true;
