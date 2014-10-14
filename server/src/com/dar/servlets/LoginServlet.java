@@ -60,15 +60,19 @@ public class LoginServlet extends HttpServlet {
 	    }
 		DBConnect conn = new DBConnect(getServletContext().getRealPath("/") + "/WEB-INF/dar.db");
 		conn.connect();
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		if(conn.isUserRegistered(login, password)){
 			User user = new User();
 			user.setLogin(login);
 			request.getSession().setAttribute("user", user);
+			response.setContentType("JSON");
+			response.setStatus(HttpServletResponse.SC_OK);
 			jsonResponse = "{success : true}";
 		}
 		else
-			jsonResponse = "{success : false, error : wrong_credentials}";
-		out.print(jsonResponse);
+			jsonResponse = "{error : \"wrong_credentials\"}";
+		out.write(jsonResponse);
+		out.close();
 		out.flush();
 		conn.close();
 	}

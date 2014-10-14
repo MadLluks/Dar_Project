@@ -8,7 +8,7 @@
 <title>Accueil</title>
 </head>
 <body>
-<p><h1>Initial index</h1></p>
+<h1>Initial index</h1>
 ${ !empty user ? "Hello, " : ""} ${ !empty user ? user.login : ""}
 </body>
 </html>

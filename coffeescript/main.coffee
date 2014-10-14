@@ -12,3 +12,4 @@ class window.ViewManager
 	@Load: (pageName) ->
 		$.get "./view/"+pageName+".html", (data) ->
 			$("#content").html data
+

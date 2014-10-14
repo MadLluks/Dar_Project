@@ -14,6 +14,7 @@
     <script src="scripts/jquery-2.1.1.min.js"></script>
     <script src="bower_components/foundation/js/vendor/modernizr.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/connexion.js"></script>
 </head>
 <body>
     <div class="off-canvas-wrap" data-offcanvas>
@@ -28,7 +29,7 @@
             <aside class="left-off-canvas-menu">
                 <!-- whatever you want goes here -->
                 <ul>
-                  <li class="active"><a href="#">Right Button Active</a></li>
+                  <li class="active"><a href="#">Connexion</a></li>
                     <li class="has-dropdown">
                         <a href="#">Right Button Dropdown</a>
                         <ul class="dropdown">
@@ -52,7 +53,7 @@
             <section class="top-bar-section">
                 <!-- Right Nav Section -->
                 <ul class="right">
-                    <li class="active"><a href="#">Right Button Active</a></li>
+                    <li class="active"><a href="#" class="login-btn">Connexion</a></li>
                     <li class="has-dropdown">
                         <a href="#">Right Button Dropdown</a>
                         <ul class="dropdown">
@@ -90,7 +91,6 @@
 
 <script>
     window.ViewManager.Init("connexion")
-    window.ViewManager.Load("test")
     $(document).foundation();
 </script>
 </html>
