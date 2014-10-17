@@ -3,3 +3,7 @@
 /.sass-cache/*
 *.DS_Store
 /stylesheets/*
+
+# Server Eclipse configuration
+server/.classpath
+
