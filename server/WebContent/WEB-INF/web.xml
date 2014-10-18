@@ -17,6 +17,15 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>GmapsServlet</servlet-name>
+    <servlet-class>com.dar.servlets.GmapsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GmapsServlet</servlet-name>
+    <url-pattern>/gmaps</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>com.dar.servlets.RegisterServlet</servlet-class>
   </servlet>
