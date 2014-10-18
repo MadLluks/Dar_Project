@@ -6,4 +6,7 @@
 
 # Server Eclipse configuration
 server/.classpath
+server/.metadata
+server/.settings
+server/RemoteSystemsTempFiles
 
