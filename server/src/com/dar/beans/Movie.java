@@ -16,10 +16,11 @@ public class Movie {
 	private boolean loaded=false;
 	
 		
-	public Movie(String movie_id, String title) {
+	public Movie(String movie_id, String title, Cinema cinema) {
 		conn = DBHandler.getInstance();
 		this.setMovie_id(movie_id);
 		this.setTitle(title);
+		this.cinema = cinema;
 	}
 
 	public String getTitle() {
@@ -39,12 +40,6 @@ public class Movie {
 		this.movie_id = movie_id;
 		this.modified = true;
 	}
-
-	public void setCine(float cine_lat, float cine_lon) {
-		this.cinema = new Cinema(cine_lat, cine_lon);
-		this.cinema.save();
-		this.modified = true;
-	}
 	
 	public boolean load(String movie_id, String title){
 		PreparedStatement prestmt;
@@ -55,6 +50,7 @@ public class Movie {
 			this.loaded = prestmt.executeQuery().next();
 			this.movie_id = movie_id;
 			this.title = title;
+			prestmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			this.loaded = false;

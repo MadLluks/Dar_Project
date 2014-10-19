@@ -87,7 +87,7 @@ public class User {
 			seenMovies = new ArrayList<Movie>();
 			PreparedStatement prestmt;
 			try {
-				String query = "SELECT m.movie_id id,m.title title FROM movie m, movie_seen ms, user u ";
+				String query = "SELECT m.movie_id id,m.title title,ms.cine_id cine_id FROM movie m, movie_seen ms, user u ";
 				query += "WHERE m.movie_id = ms.movie_id AND ms.login = u.login ";
 				query += "AND login = ?";
 				prestmt = this.conn.prepareStatement(query);
@@ -96,8 +96,11 @@ public class User {
 				while(res.next()){
 					String id = res.getString("movie_id");
 					String title = res.getString("title");
-					seenMovies.add(new Movie(id, title));
+					int cine_id = res.getInt("cine_id");
+					seenMovies.add(new Movie(id, title, new Cinema(cine_id)));
 				}
+				res.close();
+				prestmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -126,7 +129,8 @@ public class User {
 			try {				
 				prestmt = this.conn.prepareStatement(query);
 				prestmt.setString(1, login);
-				prestmt.executeQuery();				
+				prestmt.executeQuery();		
+				prestmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				success = false;
