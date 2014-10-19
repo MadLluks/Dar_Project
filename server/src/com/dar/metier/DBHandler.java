@@ -8,6 +8,8 @@ public class DBHandler {
 	private static Connection connection = null;
 	private static String uri = "jdbc:sqlite:";
 	private static String dbPath;
+	
+	private DBHandler(){}
 
 	/*
 	 * Called by InitContextListener
