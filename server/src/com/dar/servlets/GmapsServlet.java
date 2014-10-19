@@ -2,11 +2,13 @@ package com.dar.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.dar.metier.GmapsAPIHandler;
 
 /**
@@ -28,13 +30,40 @@ public class GmapsServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		GmapsAPIHandler gmaps = new GmapsAPIHandler();
-		String jsonResp = gmaps.doQuery("Toronto", "Montreal", "driving");
+		// example of working request :
+		// http://localhost:8080/darserver/gmaps?origin=Toronto&destination=Montreal
+		
+		String origin, destination, mode;
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("JSON");
-		response.setStatus(HttpServletResponse.SC_OK);
+		String jsonResp = "";
+		if(request.getParameter("origin") != null
+				&& request.getParameter("destination") != null){
+			if(request.getParameter("mode") != null)
+				mode = (String) request.getParameter("mode");
+			else
+				mode = "driving";
+			
+			destination = (String) request.getParameter("destination");
+			origin = (String) request.getParameter("origin");
+			System.out.println(origin+" "+destination+" "+mode);
+			GmapsAPIHandler gmaps = new GmapsAPIHandler();
+			response.setContentType("application/json");
+
+			try{
+				jsonResp = gmaps.doQuery(origin, destination, mode);
+				jsonResp = "{success: true, result: "+jsonResp+"}";
+				response.setStatus(HttpServletResponse.SC_OK);
+			}
+			catch(IOException e){
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				jsonResp = "{sucess: false, error: bad_request}";
+			}			
+		}
+		else
+			jsonResp = "{success: false, error: missing_parameter}";
+		
 		out.write(jsonResp);
 		out.close();
 		out.flush();	
