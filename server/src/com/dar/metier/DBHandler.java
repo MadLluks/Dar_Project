@@ -26,8 +26,11 @@ public class DBHandler {
 	public static Connection getInstance(){
 		if(connection == null){
 			try {
+				Class.forName("org.sqlite.JDBC");
 				connection = DriverManager.getConnection(uri+dbPath);
 			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch(ClassNotFoundException e){
 				e.printStackTrace();
 			}
 		}		
