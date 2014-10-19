@@ -30,8 +30,10 @@ public class GmapsServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// example of working request :
+		// examples of working requests :
 		// http://localhost:8080/darserver/gmaps?origin=Toronto&destination=Montreal
+		// http://localhost:8080/darserver/gmaps?origin=rue de madrid,gif-sur-yvette&destination=17 rue de liné,paris
+		// http://localhost:8080/darserver/gmaps?origin=48.6917631,2.1018575&destination=paris
 		
 		String origin, destination, mode;
 		PrintWriter out = response.getWriter();
