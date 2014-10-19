@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dar.beans.Cinema;
 import com.dar.beans.Movie;
 import com.dar.beans.User;
 
@@ -24,7 +25,6 @@ public class MovieServlet extends HttpServlet {
      */
     public MovieServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -49,6 +49,7 @@ public class MovieServlet extends HttpServlet {
 		if(user == null){
 			out.print("{success : false, error : login_required}");
 			out.flush();
+			out.close();
 			return;
 		}
 		String title;
@@ -64,11 +65,12 @@ public class MovieServlet extends HttpServlet {
 		catch(Exception e){
 			out.print("{success : false, error : missing_parameter}");
 			out.flush();
+			out.close();
 			return;
 	    }
 		
-		Movie m = new Movie(movie_id, title);
-		m.setCine(cine_lat, cine_lon);
+		Cinema cine = new Cinema(cine_lat, cine_lon);
+		Movie m = new Movie(movie_id, title, cine);
 		user.addSeenMovie(m);
 		if(!user.save()){
 			out.print("{success : false, error : user_save_error}");
