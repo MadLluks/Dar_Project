@@ -54,7 +54,7 @@ public class User {
 	public boolean register(){
 		boolean res = true;
 		PreparedStatement prestmt;
-		Connection conn = DBHandler.getInstance();
+		conn = DBHandler.getInstance();
 		try{
 			prestmt = conn.prepareStatement("insert into user values(?, ?)");
 			prestmt.setString(1, login);
@@ -67,15 +67,19 @@ public class User {
 		}
 		return res;
 	}
+	
+	public boolean load(){
+		return this.load(login, password);
+	}
 
-	public boolean load(String login, String password) throws SQLException{
+	public boolean load(String login, String password){
 		PreparedStatement prestmt;
 		boolean res;
 		try {
 			prestmt = this.conn
 					.prepareStatement("select * from user where login = ? and password = ?");
 			prestmt.setString(1, login);
-			prestmt.setString(1, password);
+			prestmt.setString(2, password);
 			res = prestmt.executeQuery().next();
 			this.login = login;
 			this.password = password;
