@@ -4,11 +4,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DBConnect {
+public class DBHandler {
 	private String dbPath = "";
 	private Connection connection = null;  
 
-	public DBConnect(String path){
+	public DBHandler(String path){
 		this.dbPath = path;		
 	}
 	
