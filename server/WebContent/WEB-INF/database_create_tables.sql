@@ -36,7 +36,7 @@ CREATE TABLE cinema
 
 CREATE TABLE movie
 (
-	movie_id int NOT NULL,
+	movie_id varchar(255) NOT NULL,
 	title varchar(255) NOT NULL,
 	PRIMARY KEY (movie_id)
 );
