@@ -13,7 +13,7 @@ public class InitContextListener implements javax.servlet.ServletContextListener
 	@Override
 	public void contextInitialized(ServletContextEvent contextEvent) {
 		// TODO Auto-generated method stub
-		DBHandler.setPath(contextEvent.getServletContext().getRealPath("/") + "/WEB-INF/dar.db");
+		DBHandler.setPath(contextEvent.getServletContext().getRealPath("/") + "WEB-INF/dar.db");
 	}
 
 }
