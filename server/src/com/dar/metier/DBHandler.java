@@ -4,23 +4,34 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DBHandler {
-	private String dbPath = "";
-	private Connection connection = null;  
+import com.dar.beans.User;
 
-	public DBHandler(String path){
-		this.dbPath = path;		
+public class DBHandler {
+	//private static final String dbPath = getServletContext().getRealPath("/") + "/WEB-INF/dar.db";
+	private static Connection connection = null;
+	private static String uri = "jdbc:sqlite:";
+	private static String dbPath;
+
+	/*
+	 * Called by InitContextListener
+	 */
+	public static void setPath(String path){
+		dbPath = path;
 	}
 	
-	public void connect(){
-		try {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
-		} catch (ClassNotFoundException notFoundException) {
-			notFoundException.printStackTrace();
-		} catch (SQLException sqlException) {
-			sqlException.printStackTrace();
-		}
+	public static String getPath(){
+		return dbPath;
+	}
+	
+	public static Connection getInstance(){
+		if(connection == null){
+			try {
+				connection = DriverManager.getConnection(uri+dbPath);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}		
+		return connection;	
 	}
 	
 	public void close() {
@@ -31,37 +42,26 @@ public class DBHandler {
 		}
 	}
 	
-	public boolean registerUser(String login, String password){
-		boolean res = true;
-		PreparedStatement prestmt;
-		try{
-			prestmt = this.connection
-				.prepareStatement("insert into user values(?, ?)");
-			prestmt.setString(1, login);
-			prestmt.setString(2, password);
-			prestmt.execute();
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-			res = false;
-		}
-		return res;
+	public String getSeenMovies(User user){
+		// TODO
+		return "";
 	}
 	
-	public boolean isUserRegistered(String login, String password){
-		PreparedStatement prestmt;
-		boolean res;
-		try {
-			prestmt = this.connection
-					.prepareStatement("select * from user where login = ?");
-			prestmt.setString(1, login);
-			res = prestmt.executeQuery().next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			res = false;
-		}
-		return res;
+	public String getInfosOnMovie(User user, int movie_id){
+		// TODO
+		return "";
 	}
 	
+	public boolean addSeenMovie(User user, String title){
+		// TODO
+		// if no movie with title "title" exists in db.movie, create an entry
+		// 
+		// add entry (user.login, movie.id, cine.id) in db.movie_seen  
+		return false;
+	}
 	
+//	public boolean saveUserLocation(User user, Location loc){
+//		// TODO
+//		return false;
+//	}
 }
