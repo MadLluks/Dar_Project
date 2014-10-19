@@ -8,12 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.dar.beans.User;
-import com.dar.metier.DBConnect;
+
 
 /**
  * Servlet implementation class RegisterServlet
+ * @deprecated
  */
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -56,15 +56,12 @@ public class RegisterServlet extends HttpServlet {
 			out.flush();
 			return;
 	    }
-		DBConnect conn = new DBConnect(getServletContext().getRealPath("/") + "/WEB-INF/dar.db");
-		conn.connect();
-		if(conn.isUserRegistered(login, password)){			
+		User user = new User(login, password);
+		if(user.load()){			
 			jsonResponse = "{success : false, error : login_exists}";
 		}
 		else{
-			if(conn.registerUser(login, password)){
-				User user = new User();
-				user.setLogin(login);
+			if(user.register()){				
 				request.getSession().setAttribute("user", user);
 				jsonResponse = "{success : true}";
 			}
@@ -73,6 +70,5 @@ public class RegisterServlet extends HttpServlet {
 		}
 		out.print(jsonResponse);
 		out.flush();
-		conn.close();
 	}
 }

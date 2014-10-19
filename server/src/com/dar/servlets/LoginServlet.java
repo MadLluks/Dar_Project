@@ -2,19 +2,16 @@ package com.dar.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.dar.beans.User;
-import com.dar.metier.DBConnect;
-
 
 /**
  * Servlet implementation class LoginServlet
+ * @deprecated
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -49,31 +46,30 @@ public class LoginServlet extends HttpServlet {
 		String jsonResponse = "";
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		try{
 			login = request.getParameter("login");
 			password = request.getParameter("password");
 		}
 		catch(Exception e){
-			out.print("{success : false, error : missing_parameter}");
+			out.print("{success: false, error: missing_parameter}");
 			out.flush();
 			return;
 	    }
-		DBConnect conn = new DBConnect(getServletContext().getRealPath("/") + "/WEB-INF/dar.db");
-		conn.connect();
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		if(conn.isUserRegistered(login, password)){
-			User user = new User();
-			user.setLogin(login);
+
+		User user = new User();
+		if(user.load(login, password)){
 			request.getSession().setAttribute("user", user);
 			response.setContentType("JSON");
 			response.setStatus(HttpServletResponse.SC_OK);
-			jsonResponse = "{success : true}";
+			jsonResponse = "{success: true}";
 		}
-		else
-			jsonResponse = "{error : \"wrong_credentials\"}";
+		else{
+			jsonResponse = "{success: false, error : \"wrong_credentials\"}";
+		}
+
 		out.write(jsonResponse);
 		out.close();
 		out.flush();
-		conn.close();
 	}
 }
