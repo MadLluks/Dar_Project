@@ -18,6 +18,13 @@ CREATE TABLE location
 	PRIMARY KEY (loc_id)
 );
 
+CREATE TABLE user_location
+(
+	login varchar(255) NOT NULL,
+	loc_id int NOT NULL,
+	FOREIGN KEY (login) REFERENCES user(login),
+	FOREIGN KEY (loc_id) REFERENCES location(loc_id)
+)
 
 CREATE TABLE cinema
 (
