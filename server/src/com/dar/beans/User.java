@@ -8,24 +8,27 @@ import java.util.ArrayList;
 
 import com.dar.metier.DBHandler;
 
-public class User {
+public class User extends AbstractBean{
 	private String login;	
 	private String password;
 	private Connection conn;
 	private ArrayList<Movie> seenMovies = null;
-	private boolean movieAdded = false;
-	private boolean passwordModified = false;
-	private boolean registered = false;
 	
 	public User(String login, String password){
 		this.login = login;
-		this.password = password;
-		conn = DBHandler.getInstance();
+		this.password = password;		
+		this.modified = true;
+		init();
 	}
 	
 	public User(){
 		this.login = "";
 		this.password = "";
+		init();
+	}
+	
+	private void init(){
+		seenMovies = new ArrayList<Movie>();
 		conn = DBHandler.getInstance();
 	}
 	
@@ -38,25 +41,10 @@ public class User {
 	}
 	
 	public void setPassword(String password){
+		this.modified = true;
 		this.password = password;
 	}
 	
-	public boolean register(){
-		boolean res = true;
-		PreparedStatement prestmt;
-		try{
-			prestmt = this.conn.prepareStatement("insert into user values(?, ?)");
-			prestmt.setString(1, login);
-			prestmt.setString(2, password);
-			prestmt.execute();
-			registered = true;
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-			res = false;
-		}
-		return res;
-	}
 	
 	public boolean load(){
 		return this.load(login, password);
@@ -64,27 +52,22 @@ public class User {
 
 	public boolean load(String login, String password){
 		PreparedStatement prestmt;
-		boolean res;
 		try {
-			prestmt = this.conn
-					.prepareStatement("SELECT * FROM user WHERE login = ? AND password = ?");
+			prestmt = this.conn.prepareStatement("SELECT * FROM user WHERE login = ? AND password = ?");
 			prestmt.setString(1, login);
 			prestmt.setString(2, password);
-			res = prestmt.executeQuery().next();
+			this.verified  = prestmt.executeQuery().next();
 			this.login = login;
 			this.password = password;
-			this.registered = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			res = false;
+			this.verified = false;
 		}
-		return res;
+		return this.verified;
 	}
 	
 	public ArrayList<Movie> getSeenMovies(){
-		if(seenMovies == null || movieAdded){
-			movieAdded = false;
-			seenMovies = new ArrayList<Movie>();
+		if(seenMovies.size() == 0){			
 			PreparedStatement prestmt;
 			try {
 				String query = "SELECT m.movie_id id,m.title title,ms.cine_id cine_id FROM movie m, movie_seen ms, user u ";
@@ -108,35 +91,75 @@ public class User {
 		return seenMovies;
 	}
 	
-	public boolean addSeenMovie(Movie m){
-		this.movieAdded = true;
-		this.seenMovies.add(m);
-		return m.save();
+	public ArrayList<Cinema> getCinemaVisited(){
+		ArrayList<Cinema> result = new ArrayList<Cinema>();
+		PreparedStatement prestmt;
+		try {
+			String query = "SELECT c.cine_name cine_name, c.cine_id cine_id, l.lat lat, l.lon lon FROM movie_seen ms, location l ";
+			query += "WHERE ms.cine_id = c.cine_id AND l.loc_id = c.loc_id AND ms.login = ? ";
+			prestmt = this.conn.prepareStatement(query);
+			prestmt.setString(1, login);
+			ResultSet res = prestmt.executeQuery();
+			while(res.next()){
+				String name = res.getString("cine_name");
+				float lat = Float.valueOf(res.getString("lat"));
+				float lon = Float.valueOf(res.getString("lon"));
+				int cine_id = res.getInt("cine_id");
+				result.add(new Cinema(cine_id, name, lat, lon));
+			}
+			res.close();
+			prestmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
-	public boolean save(){
+	public boolean addSeenMovie(Movie m){
+		this.seenMovies.add(m);
+		return m.save();
+	}	
+
+	@Override
+	protected boolean update() {
 		boolean success = false;
-		if(!this.registered)
-			success = this.register();
-		if(movieAdded){
-			for(Movie m : this.seenMovies){
-				success &= m.save();
-			}
+		saveSeenMovies();
+		String query = "UPDATE user SET password = ? WHERE login = ?";
+		PreparedStatement prestmt;
+		try {				
+			prestmt = this.conn.prepareStatement(query);
+			prestmt.setString(1, login);
+			prestmt.executeQuery();		
+			prestmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			success = false;
 		}
-		if(passwordModified){
-			String query = "UPDATE user SET password = ? WHERE login = ?";
-			PreparedStatement prestmt;
-			try {				
-				prestmt = this.conn.prepareStatement(query);
-				prestmt.setString(1, login);
-				prestmt.executeQuery();		
-				prestmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				success = false;
-			}
-		}		
 		return success;
+	}
+
+	@Override
+	protected boolean insert() {
+		boolean res = true;
+		saveSeenMovies();
+		PreparedStatement prestmt;
+		try{
+			prestmt = this.conn.prepareStatement("insert into user values(?, ?)");
+			prestmt.setString(1, login);
+			prestmt.setString(2, password);
+			prestmt.execute();
+			verified = true;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			res = false;
+		}
+		return res;
+	}
+	
+	public void saveSeenMovies(){
+		for(Movie m : this.seenMovies)
+			m.save();
 	}
 	
 }

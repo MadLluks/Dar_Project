@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import com.dar.metier.DBHandler;
 
-public class Location {
+public class Location extends AbstractBean{
 	private int loc_id;
 	private String address;
 	private String postal_code;
@@ -104,6 +104,23 @@ public class Location {
 	}
 	public void setLon(float lon) {
 		this.lon = lon;
+	}
+
+	public String toJson() {
+		return "{loc_id: "+loc_id+", lon: "+lon+", lat:"+lat+"}";
+	}
+
+	@Override
+	protected boolean update() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	protected boolean insert() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 
