@@ -29,7 +29,8 @@ CREATE TABLE user_location
 CREATE TABLE cinema
 (
 	cine_id int NOT NULL,
-	loc_id int NOT_NULL,
+	loc_id int NOT NULL,
+	cine_name varchar(255) NOT NULL,
 	PRIMARY KEY (cine_id),
 	FOREIGN KEY (loc_id) REFERENCES location(loc_id)
 );
