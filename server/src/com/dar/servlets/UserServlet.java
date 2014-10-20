@@ -119,7 +119,7 @@ public class UserServlet extends HttpServlet {
 		if(user.load())
 			jsonResponse = "{success : false, error : login_exists}";		
 		else{
-			if(user.register()){				
+			if(user.save()){				
 				request.getSession().setAttribute("user", user);
 				jsonResponse = "{success : true}";
 			}
