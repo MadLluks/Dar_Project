@@ -2,11 +2,11 @@ package com.dar.beans;
 
 public abstract class AbstractBean {
 	protected boolean modified;
-	protected boolean verified=false;
+	protected boolean exists=false;
 	
 	public boolean save() {
 		boolean success = true;
-		if(!verified){ 
+		if(!exists()){ 
 			success = insert();
 		}
 		else if(modified)
@@ -16,5 +16,6 @@ public abstract class AbstractBean {
 	
 	protected abstract boolean update();
 	protected abstract boolean insert();
+	protected abstract boolean exists();
 	
 }
