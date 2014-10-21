@@ -1,4 +1,4 @@
-package com.dar.metier;
+package com.dar.metier.apiHandlers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
