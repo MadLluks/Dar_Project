@@ -3,8 +3,8 @@ class window.ViewManager
 		$.get "./view/header.html", (data) ->
 			$("#header").html data
 
-		$.get "./view/footer.html", (data) ->
-			$("#footer").html data
+		###$.get "./view/footer.html", (data) ->
+			$("#footer").html data###
 
 		$.get "./view/home.html", (data) ->
 			$("#content").html data

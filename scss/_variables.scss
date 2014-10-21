@@ -1,0 +1,19 @@
+@mixin font-title() {
+	font-family: 'Lobster', cursive !important;
+	font-color: black ;
+}
+
+@mixin font-title-size($size) {
+	@include font-title();
+	font-size: $size;	
+}
+
+@mixin font-text() {
+	font-family: 'PT Serif', serif !important;
+	color: black;
+}
+
+@mixin font-text-size($size) {
+	@include font-text();
+	font-size: $size;
+}

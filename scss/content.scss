@@ -1,3 +1,104 @@
+@import 'variables';
+
 #content {
-	border: solid 1px black;
+	@include font-text-size(15px);
+
+	p {
+		@include font-text-size(15px);
+
+		&.title {
+			@include font-title-size(18px);
+			text-align: center;
+		}
+	}
+
+	#search-filter {
+		list-style: none;
+		margin: 0px;
+		width: 100%;
+
+		text-align: center;
+
+		li {
+			display: inline-block;
+			margin-right: 1rem;
+
+			label {
+				@include font-text-size(15px);
+				color: black;
+				
+				input {
+					margin-bottom: 0.5rem;
+					margin-right: 0.3rem;
+				}
+			}
+		}
+	}
+
+	#search-word-zone {
+		position: relative;
+		height: 50px;
+
+		&>div {
+			display: inline-block;
+			float: left;
+		}
+
+		&:before {
+			display: block;
+			height: 28px;
+			width: 28px; 
+			
+			content: "";
+			
+			background-image: url("../images/loupe.png");
+			background-size: contain;
+
+			position: absolute;
+			top: 4px;
+			left: 4px;
+		}
+
+		#search-word {
+			@include font-text-size(16px);
+			height: 37px;
+
+			border-top-left-radius: 10px;
+			border-bottom-left-radius: 10px;
+			border: 2px solid #333333;
+			box-shadow: 3px 3px 2px #888888;
+
+			margin: 0px;
+			padding-left: 35px;
+		}
+
+		#search-button {
+			@include font-text-size(16px);
+			height: 37px;
+
+			color: white;
+			background-color: #333333;
+
+			display: inline-block;
+
+			border-top-right-radius: 10px;
+			border-bottom-right-radius: 10px;
+			box-shadow: 3px 3px 2px #888888;
+
+			text-align: center;
+
+			span {
+				@include font-title();
+				text-transform: capitalize;
+				vertical-align: middle;
+				line-height: 37px;
+			}
+		}
+	}
+
+	#loupe {
+		#image-loupe {
+			background-image: url("../images/loupe.png");
+		}
+	}
 }

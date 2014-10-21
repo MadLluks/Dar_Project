@@ -5,92 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dar Project</title>
 
-    <link rel="stylesheet" href="stylesheets/app.css" />
-    <link rel="stylesheet" href="stylesheets/main.css" />
-    <link rel="stylesheet" href="stylesheets/header.css" />
-    <link rel="stylesheet" href="stylesheets/content.css" />
-    <link rel="stylesheet" href="stylesheets/footer.css" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Serif:700|Lobster' rel='stylesheet' type='text/css'>
 
-    <script src="scripts/jquery-2.1.1.min.js"></script>
-    <script src="bower_components/foundation/js/vendor/modernizr.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/connexion.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/app.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/header.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/content.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/footer.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/search.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/slick.css"/>
+
+    <script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="bower_components/foundation/js/vendor/modernizr.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/connexion.js"></script>
+    <script type="text/javascript" src="js/search.js"></script>
 </head>
 <body>
-    <div class="off-canvas-wrap" data-offcanvas>
-        <div class="inner-wrap">
-            <nav class="tab-bar hide-for-large-up">
-                <div class="left-small">
-                    <a href="#idOfLeftMenu" role="button" aria-controls="idOfLeftMenu" aria-expanded="false" class="left-off-canvas-toggle menu-icon" ><span></span></a>
-                </div>
-            </nav>
+    <div class="sticky">
+      <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+        <ul class="title-area">
+          <li class="name"></li>
+           <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+          <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
 
-            <!-- Off Canvas Menu -->
-            <aside class="left-off-canvas-menu">
-                <!-- whatever you want goes here -->
-                <ul>
-                  <li class="active"><a href="#">Connexion</a></li>
-                    <li class="has-dropdown">
-                        <a href="#">Right Button Dropdown</a>
-                        <ul class="dropdown">
-                          <li><a href="#">First link in dropdown</a></li>
-                          <li class="active"><a href="#">Active link in dropdown</a></li>
-                      </ul>
-                  </li>
+        <section class="top-bar-section">
+          <!-- Right Nav Section -->
+          <ul class="right">
+            <li class="has-dropdown">
+              <a href="#">Right Button Dropdown</a>
+              <ul class="dropdown">
+                <li><a href="#">First link in dropdown</a></li>
+                <li class="active"><a href="#">Active link in dropdown</a></li>
               </ul>
-          </aside>
+            </li>
+          </ul>
 
-          <!-- main content goes here -->
-          <nav class="top-bar show-for-large-only" data-topbar role="navigation">
-            <ul class="title-area">
-                <li class="name">
-                    <h1><a href="#">My Site</a></h1>
-                </li>
-                <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-                <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-            </ul>
+          <!-- Left Nav Section -->
+          <ul class="left">
 
-            <section class="top-bar-section">
-                <!-- Right Nav Section -->
-                <ul class="right">
-                    <li class="active"><a href="#" class="login-btn">Connexion</a></li>
-                    <li class="has-dropdown">
-                        <a href="#">Right Button Dropdown</a>
-                        <ul class="dropdown">
-                          <li><a href="#">First link in dropdown</a></li>
-                          <li class="active"><a href="#">Active link in dropdown</a></li>
-                      </ul>
-                  </li>
-              </ul>
-
-              <!-- Left Nav Section -->
-              <ul class="left">
-                <li><a href="#">Left Nav Button</a></li>
-            </ul>
+          </ul>
         </section>
-    </nav>
-    <div class="row">
-        <div id="header" class="large-12 medium-12 small-12 columns">
-
-        </div>
-        <div id="content" class="large-12 medium-12 small-12 columns">
-
-        </div>
-        <div id="footer" class="large-12 medium-12 small-12 columns">
-
-        </div>
+      </nav>
     </div>
 
+    <div id="main">
+      <div class="row" id="main-content">
+        <div id="content-block">
+          <div id="header">
+          </div>
+            
+          <div id="content" class="large-12 medium-12 small-12 columns">
+          </div>
+        </div>
+      </div>
+      <div id="footer" class="large-12 medium-12 small-12 columns">
+
+      </div>
+    </div>
+    </div>
     <!-- close the off-canvas menu -->
     <a class="exit-off-canvas"></a>
 </div>
 </div>
 </body>
-<script src="bower_components/foundation/js/foundation/foundation.js"></script>
-<script src="bower_components/foundation/js/foundation/foundation.offcanvas.js"></script>
+<script type="text/javascript" src="bower_components/foundation/js/foundation/foundation.js"></script>
+<script type="text/javascript" src="bower_components/foundation/js/foundation/foundation.offcanvas.js"></script>
+<script type="text/javascript" src="bower_components/foundation/js/foundation/foundation.topbar.js"></script>
+
+<script type="text/javascript" src="js/slick.min.js"></script>
 
 <script>
-    window.ViewManager.Init("connexion")
+    ViewManager.Init("connexion")
     $(document).foundation();
 </script>
 </html>

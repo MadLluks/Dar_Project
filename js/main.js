@@ -6,9 +6,10 @@ window.ViewManager = (function() {
     $.get("./view/header.html", function(data) {
       return $("#header").html(data);
     });
-    $.get("./view/footer.html", function(data) {
-      return $("#footer").html(data);
-    });
+
+    /*$.get "./view/footer.html", (data) ->
+    			$("#footer").html data
+     */
     return $.get("./view/home.html", function(data) {
       return $("#content").html(data);
     });
