@@ -9,10 +9,22 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class GmapsAPIHandler {
 	private static final String GMAPS_API_KEY = "AIzaSyAMDGS_wjPjHSGSKPJfM2cIwkWAfoUMXds";
 	private static final String GMAPS_URL_QUERY = "https://maps.googleapis.com/maps/api/directions/json?";
 	private static final String URL_CHARSET = "UTF-8";
+	private static GmapsAPIHandler gmaps = null;
+	private GmapsAPIHandler(){}
+	
+	public static GmapsAPIHandler getInstance(){
+		if(gmaps == null){
+			gmaps = new GmapsAPIHandler();
+		}
+		return gmaps;
+	}
 	
 	public String doQuery(String origin, String destination, String mode) throws MalformedURLException, IOException{
 		String query = String.format("mode=%s&key=%s&origin=%s&destination=%s", 
@@ -29,6 +41,13 @@ public class GmapsAPIHandler {
 	 */
 	public String findFastestDirection(String origin, String destination){
 		String response = "";
+		try {
+			JSONObject json = new JSONObject(doQuery(origin, destination, "driving"));
+			System.out.println(json.toString());
+		} catch (JSONException | IOException e) {
+			e.printStackTrace();
+		}
+		
 		return response;
 	}
 	
