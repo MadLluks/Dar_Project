@@ -35,7 +35,7 @@ public class Movie extends AbstractBean{
 	}
 	
 	public String toJson(){
-		return "{title: "+this.getTitle()+", id: "+this.getMovie_id()+"}";
+		return "{\"title\": \""+this.getTitle()+"\", \"id\": \""+this.getMovie_id()+"\"}";
 	}
 				
 	public String getTitle() {

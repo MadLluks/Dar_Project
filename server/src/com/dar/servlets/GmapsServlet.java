@@ -38,33 +38,35 @@ public class GmapsServlet extends HttpServlet {
 		String origin, destination, mode;
 		PrintWriter out = response.getWriter();
 		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.setContentType("JSON");
+		response.setContentType("application/json");
 		String jsonResp = "";
 		if(request.getParameter("origin") != null
 				&& request.getParameter("destination") != null){
 			if(request.getParameter("mode") != null)
 				mode = (String) request.getParameter("mode");
 			else
-				mode = "driving";
+				mode = "none";
 			
 			destination = (String) request.getParameter("destination");
 			origin = (String) request.getParameter("origin");
 			System.out.println(origin+" "+destination+" "+mode);
-			GmapsAPIHandler gmaps = new GmapsAPIHandler();
-			response.setContentType("application/json");
+			GmapsAPIHandler gmaps = GmapsAPIHandler.getInstance();			
 
 			try{
-				jsonResp = gmaps.doQuery(origin, destination, mode);
-				jsonResp = "{success: true, result: "+jsonResp+"}";
+				if(mode == "none")
+					jsonResp = gmaps.findFastestDirection(origin, destination);
+				else
+					jsonResp = gmaps.doQuery(origin, destination, mode);
+				jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
 				response.setStatus(HttpServletResponse.SC_OK);
 			}
 			catch(IOException e){
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				jsonResp = "{sucess: false, error: bad_request}";
+				jsonResp = "{\"success\": false, \"error\": bad_request}";
 			}			
 		}
 		else
-			jsonResp = "{success: false, error: missing_parameter}";
+			jsonResp = "{\"success\": false, \"error\": missing_parameter}";
 		
 		out.write(jsonResp);
 		out.close();
@@ -75,7 +77,6 @@ public class GmapsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

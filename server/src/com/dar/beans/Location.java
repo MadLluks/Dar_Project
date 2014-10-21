@@ -69,7 +69,7 @@ public class Location extends AbstractBean{
 	}
 
 	public String toJson() {
-		return "{loc_id: "+loc_id+", lon: "+lon+", lat:"+lat+"}";
+		return "{\"loc_id\": "+loc_id+", \"lon\": "+lon+", \"lat\":"+lat+"}";
 	}
 	
 	@Override
