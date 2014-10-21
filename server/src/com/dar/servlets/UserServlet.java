@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dar.beans.Cinema;
+import com.dar.beans.Movie;
 import com.dar.beans.User;
 
 /**
@@ -29,7 +31,23 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// check if user is logged in
+		User user = (User) request.getSession().getAttribute("user");
+		if(user != null){
+			//this.getServletContext().getRequestDispatcher( "/WEB-INF/index.jsp" ).forward( request, response );
+			// TODO REMOVE : test only
+			Cinema c = new Cinema("Premier cinéma", 1.429504f, 2.504950f);
+			user.addSeenMovie(new Movie("P111", "Le dernier des mohicans"), c);
+			Movie m = new Movie("P222");
+			Movie m2 = new Movie("P111");
+			System.out.println(m.toJson());
+			System.out.println(m2.toJson());
+			Cinema c2 = new Cinema("Premier cinéma", 1.429504f, 2.504950f);
+			System.out.println("C2 : "+c2.getExists());
+		}
+		// not logged in, can load login page
+		else
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/login.jsp" ).forward( request, response );
 	}
 
 	/**

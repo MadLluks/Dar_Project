@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dar.metier.GmapsAPIHandler;
+import com.dar.metier.apiHandlers.GmapsAPIHandler;
 
 /**
  * Servlet implementation class GmapsServlet

@@ -75,7 +75,7 @@ public class MovieServlet extends HttpServlet {
 			return;
 		}
 		String title;
-		float cine_lon, cine_lat;
+		Float cine_lon, cine_lat;
 		String movie_id;
 		String name;
 		try{
@@ -84,6 +84,8 @@ public class MovieServlet extends HttpServlet {
 			cine_lon = Float.valueOf(request.getParameter("cine_lon"));
 			cine_lat = Float.valueOf(request.getParameter("cine_lat"));
 			name = request.getParameter("cine_name");
+			if(name == null || cine_lat == null || cine_lon == null || title == null || movie_id == null)
+				throw new Exception(); 
 		}
 		catch(Exception e){
 			out.print("{success : false, error : missing_parameter}");
@@ -93,9 +95,9 @@ public class MovieServlet extends HttpServlet {
 	    }
 		
 		Cinema cine = new Cinema(name, cine_lat, cine_lon);
-		Movie m = new Movie(movie_id, title, cine);
-		user.addSeenMovie(m);
-		if(!user.save()){
+		Movie m = new Movie(movie_id, title);
+		
+		if(!user.addSeenMovie(m,cine) || !user.save()){
 			out.print("{success : false, error : user_save_error}");
 			out.flush();
 		}
