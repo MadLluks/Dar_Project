@@ -12,20 +12,28 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>com.dar.servlets.LoginServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/login</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>GmapsServlet</servlet-name>
     <servlet-class>com.dar.servlets.GmapsServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GmapsServlet</servlet-name>
     <url-pattern>/gmaps</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MovieServlet</servlet-name>
+    <servlet-class>com.dar.servlets.MovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MovieServlet</servlet-name>
+    <url-pattern>/movie</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CinemaServlet</servlet-name>
+    <servlet-class>com.dar.servlets.CinemaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CinemaServlet</servlet-name>
+    <url-pattern>/cinema</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>UserServlet</servlet-name>

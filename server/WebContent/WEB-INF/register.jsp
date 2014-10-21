@@ -14,6 +14,7 @@
 	<label for="password">Password :</label>
 	<input name="password" type="password" width="150" />
 	<input type="submit" value="Register" />
+	<input type="hidden" name="action" value="register" />
 </form>
 </body>
 </html>
