@@ -52,21 +52,21 @@ public class RegisterServlet extends HttpServlet {
 			password = request.getParameter("password");
 		}
 		catch(Exception e){
-			out.print("{success : false, error : missing_parameter}");
+			out.print("{\"success\": false, \"error\" : \"missing_parameter\"}");
 			out.flush();
 			return;
 	    }
 		User user = new User(login, password);
 		if(user.load()){			
-			jsonResponse = "{success : false, error : login_exists}";
+			jsonResponse = "{\"success\": false, \"error\": \"login_exists\"}";
 		}
 		else{
 			if(user.save()){				
 				request.getSession().setAttribute("user", user);
-				jsonResponse = "{success : true}";
+				jsonResponse = "{\"success\": true}";
 			}
 			else
-				jsonResponse = "{success : false, error : insert_error}";
+				jsonResponse = "{\"success\": false, \"error\": \"insert_error\"}";
 		}
 		out.print(jsonResponse);
 		out.flush();

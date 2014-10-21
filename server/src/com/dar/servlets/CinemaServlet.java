@@ -3,13 +3,17 @@ package com.dar.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.dar.beans.Cinema;
 import com.dar.beans.User;
+import com.dar.metier.apiHandlers.AlloCineAPIHandler;
 
 /**
  * Servlet implementation class CinemaServlet
@@ -29,7 +33,27 @@ public class CinemaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = (String) request.getSession().getAttribute("action");
+		switch(action){
+		// execute request to AlloCine API
+		case "api_request":
+			alloCineRequest(request, response);
+			break;
 		// get cinemas visited by user
+		case "user_list":
+			listCinemasByUser(request, response);
+			break;
+		default:
+			PrintWriter out = response.getWriter();
+			response.setContentType("application/json");			
+			out.print("{\"success\": false, \"error\": \"unknown_action\"}");
+			out.flush();
+			out.close();
+			break;
+		}
+	}
+	
+	private void listCinemasByUser(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		User user = (User) request.getSession().getAttribute("user");
 		if(user != null){
 			String jsonResp = "";
@@ -37,7 +61,7 @@ public class CinemaServlet extends HttpServlet {
 			for(Cinema c : cines){
 				jsonResp += c.toJson()+", ";
 			}
-			jsonResp = "{success: true, result: "+jsonResp+"}";
+			jsonResp = "{\"success\": true, \"result: "+jsonResp+"}";
 			PrintWriter out = response.getWriter();
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
@@ -48,12 +72,29 @@ public class CinemaServlet extends HttpServlet {
 		else{
 			PrintWriter out = response.getWriter();
 			response.setContentType("application/json");			
-			out.print("{success: false, error: not_logged_in}");
+			out.print("{\"success\": false, \"error\": \"not_logged_in\"}");
 			out.flush();
 			out.close();
 		}
 	}
 
+	private void alloCineRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		request.removeAttribute("action");
+		String query = "";
+		Enumeration<String> names = request.getAttributeNames();
+		while(names.hasMoreElements()){
+			String e = names.nextElement();
+			query += e+"="+request.getAttribute(e)+"&";
+		}
+		String jsonResp = AlloCineAPIHandler.getInstance().doQuery(query);
+		PrintWriter out = response.getWriter();
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("application/json");
+		out.write(jsonResp);
+		out.close();
+		out.flush();
+	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

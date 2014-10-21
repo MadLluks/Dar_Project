@@ -98,7 +98,7 @@ public class UserServlet extends HttpServlet {
 			password = request.getParameter("password");
 		}
 		catch(Exception e){
-			out.print("{success: false, error: missing_parameter}");
+			out.print("{\"success\": false, \"error\": \"missing_parameter\"}");
 			out.flush();
 			out.close();
 			return;
@@ -107,12 +107,12 @@ public class UserServlet extends HttpServlet {
 		User user = new User();
 		if(user.load(login, password)){
 			request.getSession().setAttribute("user", user);
-			response.setContentType("JSON");
+			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
-			jsonResponse = "{success: true}";
+			jsonResponse = "{\"success\": true}";
 		}
 		else{
-			jsonResponse = "{success: false, error : \"wrong_credentials\"}";
+			jsonResponse = "{\"success\": false, \"error\" : \"wrong_credentials\"}";
 		}
 		out.write(jsonResponse);
 		out.flush();
@@ -129,20 +129,20 @@ public class UserServlet extends HttpServlet {
 			password = request.getParameter("password");
 		}
 		catch(Exception e){
-			out.print("{success : false, error : missing_parameter}");
+			out.print("{success : false, error : \"missing_parameter\"}");
 			out.flush();
 			return;
 	    }
 		User user = new User(login, password);
 		if(user.load())
-			jsonResponse = "{success : false, error : login_exists}";		
+			jsonResponse = "{success : false, error : \"login_exists\"}";		
 		else{
 			if(user.save()){				
 				request.getSession().setAttribute("user", user);
 				jsonResponse = "{success : true}";
 			}
 			else
-				jsonResponse = "{success : false, error : insert_error}";
+				jsonResponse = "{success : false, error: \"insert_error\"}";
 		}
 		out.print(jsonResponse);
 		out.flush();

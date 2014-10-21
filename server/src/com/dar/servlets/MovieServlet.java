@@ -32,7 +32,7 @@ public class MovieServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Get movies saved by current user
+		// Get movies saved by current user
 		User user = (User) request.getSession().getAttribute("user");
 		if(user != null){
 			String jsonResp = "";
@@ -98,10 +98,10 @@ public class MovieServlet extends HttpServlet {
 		Movie m = new Movie(movie_id, title);
 		
 		if(!user.addSeenMovie(m,cine) || !user.save()){
-			out.print("{success : false, error : user_save_error}");
+			out.print("{\"success\": false, \"error\": \"user_save_error\"}");
 			out.flush();
 		}
-		out.print("{success : true}");
+		out.print("{\"success\" : true}");
 		out.flush();
 		out.close();
 		
