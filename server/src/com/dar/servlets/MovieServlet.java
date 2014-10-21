@@ -2,6 +2,7 @@ package com.dar.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +33,28 @@ public class MovieServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Get movies saved by current user
+		User user = (User) request.getSession().getAttribute("user");
+		if(user != null){
+			String jsonResp = "";
+			ArrayList<Movie> movies = user.getSeenMovies();
+			for(Movie m : movies){
+				jsonResp += m.toJson()+", ";
+			}
+			jsonResp = "{success: true, result: "+jsonResp+"}";
+			PrintWriter out = response.getWriter();
+			response.setContentType("application/json");
+			response.setStatus(HttpServletResponse.SC_OK);
+			out.print(jsonResp);
+			out.flush();
+			out.close();
+		}
+		else{
+			PrintWriter out = response.getWriter();
+			response.setContentType("application/json");			
+			out.print("{success: false, error: not_logged_in}");
+			out.flush();
+			out.close();
+		}
 	}
 
 	/**
@@ -39,8 +62,7 @@ public class MovieServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Save movie for current user
-		
-		
+				
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		
@@ -53,14 +75,17 @@ public class MovieServlet extends HttpServlet {
 			return;
 		}
 		String title;
-		float cine_lon, cine_lat;
+		Float cine_lon, cine_lat;
 		String movie_id;
-		
+		String name;
 		try{
 			title = request.getParameter("title");
 			movie_id = request.getParameter("movie_id");
 			cine_lon = Float.valueOf(request.getParameter("cine_lon"));
 			cine_lat = Float.valueOf(request.getParameter("cine_lat"));
+			name = request.getParameter("cine_name");
+			if(name == null || cine_lat == null || cine_lon == null || title == null || movie_id == null)
+				throw new Exception(); 
 		}
 		catch(Exception e){
 			out.print("{success : false, error : missing_parameter}");
@@ -69,10 +94,10 @@ public class MovieServlet extends HttpServlet {
 			return;
 	    }
 		
-		Cinema cine = new Cinema(cine_lat, cine_lon);
-		Movie m = new Movie(movie_id, title, cine);
-		user.addSeenMovie(m);
-		if(!user.save()){
+		Cinema cine = new Cinema(name, cine_lat, cine_lon);
+		Movie m = new Movie(movie_id, title);
+		
+		if(!user.addSeenMovie(m,cine) || !user.save()){
 			out.print("{success : false, error : user_save_error}");
 			out.flush();
 		}

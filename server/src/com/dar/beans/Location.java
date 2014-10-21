@@ -8,65 +8,27 @@ import java.sql.Statement;
 
 import com.dar.metier.DBHandler;
 
-public class Location {
-	private int loc_id;
+public class Location extends AbstractBean{
+	private Integer loc_id;
 	private String address;
 	private String postal_code;
 	private String city;
-	private float lat,lon;
+	private Float lat,lon;
 	private Connection conn;
 	
 	public Location(float lat, float lon) {
 		conn = DBHandler.getInstance();
+		this.lat = lat;
+		this.lon = lon;
 		// find loc_id for lat and lon args
 		// create entry if none exists
-		PreparedStatement prestmt;
-		try {
-			String query = "SELECT loc_id FROM location WHERE lat = ? AND lon = ?";
-			prestmt = this.conn.prepareStatement(query);
-			prestmt.setFloat(1,lat);
-			prestmt.setFloat(2, lon);
-			ResultSet res = prestmt.executeQuery();
-			res.next();
-			this.loc_id = res.getInt("loc_id");
-			res.close();
-			prestmt.close();
-			
-		} catch (SQLException e) {
-			// it does not exist yet, we add it
-			try {
-				String query = "INSERT INTO location(lat,lon) VALUES(?,?)";
-				prestmt = this.conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-				prestmt.setFloat(1,lat);
-				prestmt.setFloat(2, lon);
-				this.loc_id = prestmt.executeUpdate();
-				prestmt.close();
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}
-			
-		}
+		save();
 	}
 	
 	
 	public Location(int loc_id) {
 		conn = DBHandler.getInstance();
-		PreparedStatement prestmt;
-		try {
-			String query = "SELECT lat,lon FROM location WHERE loc_id= ?";
-			prestmt = this.conn.prepareStatement(query);
-			prestmt.setFloat(1,loc_id);
-			ResultSet res = prestmt.executeQuery();
-			res.next();
-			this.loc_id = loc_id;
-			this.lat = res.getFloat("lat");
-			this.lon = res.getFloat("lon");
-			res.close();
-			prestmt.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		load();
 	}
 	
 	public int getLoc_id() {
@@ -104,6 +66,111 @@ public class Location {
 	}
 	public void setLon(float lon) {
 		this.lon = lon;
+	}
+
+	public String toJson() {
+		return "{loc_id: "+loc_id+", lon: "+lon+", lat:"+lat+"}";
+	}
+	
+	@Override
+	protected boolean exists(){
+		if(!exists){
+			PreparedStatement prestmt;
+			try {
+				prestmt = this.conn
+						.prepareStatement("SELECT loc_id FROM location WHERE lat = ? AND lon = ?");
+				prestmt.setFloat(1, lat);
+				prestmt.setFloat(2, lon);
+				ResultSet res = prestmt.executeQuery();
+				if(res.next()){
+					this.loc_id = res.getInt("loc_id");
+					exists = true;
+				}
+				prestmt.close();
+			}catch(SQLException e){}
+		}
+		return exists;
+	}
+
+	public boolean load(){
+		PreparedStatement prestmt;
+		try {
+			if(this.loc_id != null){
+				prestmt = this.conn
+						.prepareStatement("SELECT lat,lon FROM location WHERE loc_id = ?");
+				prestmt.setInt(1,loc_id);
+				ResultSet res = prestmt.executeQuery();
+				if(res.next()){
+					this.lat = res.getFloat("lat");
+					this.lon = res.getFloat("lon");
+					this.exists = true;
+				}
+				res.close();
+			}
+			else{
+				prestmt = this.conn
+						.prepareStatement("SELECT loc_id FROM location WHERE lat = ? AND lon = ?");
+				prestmt.setFloat(1, lat);
+				prestmt.setFloat(2, lon);
+				ResultSet res = prestmt.executeQuery();
+				if(res.next()){
+					this.loc_id = res.getInt("loc_id");
+					this.exists = true;
+				}
+				res.close();
+			}			
+			prestmt.close();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return this.exists;
+	}
+	
+	@Override
+	protected boolean update() {
+		boolean success = false;
+		modified = false;
+		String query = "UPDATE location SET lat = ?, lon = ? WHERE loc_id = ?";			
+		PreparedStatement prestmt;
+		try {				
+			prestmt = this.conn.prepareStatement(query);
+			prestmt.setFloat(1, lat);
+			prestmt.setFloat(2, lon);
+			prestmt.setInt(3, loc_id);
+			prestmt.executeUpdate();		
+			prestmt.close();
+			this.exists = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			success = false;
+		}
+		return success;
+	}
+
+
+	@Override
+	protected boolean insert() {
+		boolean success = false;
+		modified = false;		
+		String query = "INSERT INTO location(lat, lon) VALUES(?, ?)";
+		PreparedStatement prestmt;
+		try {				
+			prestmt = this.conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			System.out.println("lat,lon = "+lat+","+lon);
+			prestmt.setFloat(1, lat);
+			prestmt.setFloat(2, lon);
+			prestmt.executeUpdate();
+			ResultSet res = prestmt.getGeneratedKeys();
+			this.loc_id = res.getInt(1);
+			System.out.println("loc_id : "+this.loc_id);
+			res.close();
+			prestmt.close();
+			this.exists = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			success = false;
+		}
+		return success;
 	}
 	
 

@@ -9,13 +9,13 @@ CREATE TABLE user
 
 CREATE TABLE location
 (
-	loc_id int NOT NULL,
+	loc_id INTEGER PRIMARY KEY,
 	lat float NOT NULL,
 	lon float NOT NULL,
 	address varchar(255),
 	postal_code varchar(255),
 	city varchar(255),
-	PRIMARY KEY (loc_id)
+	CONSTRAINT u_location UNIQUE (lat,lon)
 );
 
 CREATE TABLE user_location
@@ -24,14 +24,15 @@ CREATE TABLE user_location
 	loc_id int NOT NULL,
 	FOREIGN KEY (login) REFERENCES user(login),
 	FOREIGN KEY (loc_id) REFERENCES location(loc_id)
-)
+);
 
 CREATE TABLE cinema
 (
-	cine_id int NOT NULL,
-	loc_id int NOT_NULL,
-	PRIMARY KEY (cine_id),
+	cine_id INTEGER PRIMARY KEY,
+	loc_id int NOT NULL,
+	cine_name varchar(255) NOT NULL,
 	FOREIGN KEY (loc_id) REFERENCES location(loc_id)
+	-- CONSTRAINT u_cinema UNIQUE(loc_id,cine_name
 );
 
 CREATE TABLE movie
@@ -41,9 +42,9 @@ CREATE TABLE movie
 	PRIMARY KEY (movie_id)
 );
 
-CREATE TABLE movie_seen
+CREATE TABLE seen_movie
 (
-	movie_id int NOT NULL,
+	movie_id varchar(255)  NOT NULL,
 	cine_id int NOT NULL,
 	login varchar(255) NOT NULL,
 	FOREIGN KEY (movie_id) REFERENCES movie(movie_id),
@@ -53,3 +54,6 @@ CREATE TABLE movie_seen
 );
 
 
+INSERT INTO user(login,password) VALUES('test','test');
+INSERT INTO user(login,password) VALUES('toto','titi');
+INSERT INTO movie VALUES('P222', 'Il était une fois');

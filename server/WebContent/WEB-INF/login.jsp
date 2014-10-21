@@ -8,12 +8,13 @@
 </head>
 <body>
 <h1>Login page</h1>
-<form method="POST" action="login">
+<form method="POST" action="user">
 	<label for="login">Login :</label>
 	<input name="login" type="text" width="150" />
 	<label for="password">Password :</label>
 	<input name="password" type="password" width="150" />
 	<input type="submit" value="Login" />
+	<input type="hidden" name="action" value="login" />
 </form>
 </body>
 </html>
