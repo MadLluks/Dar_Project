@@ -10,3 +10,4 @@ server/.metadata
 server/.settings
 server/RemoteSystemsTempFiles
 
+server/.classpath
