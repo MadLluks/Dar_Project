@@ -42,12 +42,37 @@ public class GmapsAPIHandler {
 	public String findFastestDirection(String origin, String destination){
 		String response = "";
 		try {
-			JSONObject json = new JSONObject(doQuery(origin, destination, "driving"));
-			System.out.println(json.toString());
+			String query_driving = doQuery(origin, destination, "driving");
+			String query_walking = doQuery(origin, destination, "walking");
+			String query_bicycling= doQuery(origin, destination, "bicycling");
+			JSONObject json = new JSONObject(query_driving);
+			int d_driving = Integer.MAX_VALUE;
+			if(json.get("status") == "OK")
+				d_driving = json.getJSONArray("routes").getJSONObject(0)
+								.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");			
+			json = new JSONObject(query_walking);
+			int d_walking = Integer.MAX_VALUE;
+			if(json.get("status") == "OK")
+				d_walking = json.getJSONArray("routes").getJSONObject(0)
+					.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
+			
+			json = new JSONObject(query_bicycling);
+			int d_bicycling = Integer.MAX_VALUE;
+			if(json.get("status") == "OK")
+				d_bicycling = json.getJSONArray("routes").getJSONObject(0)
+					.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
+			
+			if(d_driving < d_walking && d_driving < d_bicycling)
+				response = query_driving;
+			if(d_walking <= d_driving && d_walking < d_bicycling)
+				response = query_walking;
+			if(d_bicycling <= d_walking && d_bicycling <= d_driving)
+				response = query_bicycling;
+			
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(response);
 		return response;
 	}
 	
