@@ -32,7 +32,6 @@ public class MovieServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.addHeader("Access-Control-Allow-Origin", "*");
 		// Get movies saved by current user
 		User user = (User) request.getSession().getAttribute("user");
 		if(user != null){
@@ -65,8 +64,7 @@ public class MovieServlet extends HttpServlet {
 		// Save movie for current user
 				
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("application/json");		
 		// user must be logged in
 		User user = (User) request.getSession().getAttribute("user");
 		if(user == null){

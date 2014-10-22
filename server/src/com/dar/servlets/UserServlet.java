@@ -32,7 +32,6 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.addHeader("Access-Control-Allow-Origin", "*");
 		// check if user is logged in
 		User user = (User) request.getSession().getAttribute("user");
 		if(user != null){
@@ -58,7 +57,6 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = "";
 		response.setContentType("application/json");
-		response.addHeader("Access-Control-Allow-Origin", "*");
 		try{
 			action = request.getParameter("action");
 		}
@@ -79,8 +77,7 @@ public class UserServlet extends HttpServlet {
 			default:
 				PrintWriter out = response.getWriter();
 				response.setContentType("application/json");
-				response.addHeader("Access-Control-Allow-Origin", "*");
-				out.print("{success : false, error : unknown_action}");
+				out.print("{\"success\" : false, \"error\" : \"unknown_action\"}");
 				out.flush();
 				out.close();
 				break;

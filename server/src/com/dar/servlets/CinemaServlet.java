@@ -35,8 +35,7 @@ public class CinemaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = (String) request.getParameter("action");
 		System.out.println((String) request.getParameter("type"));
-		System.out.println(action);
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		System.out.println(action);		
 		switch(action){
 		// execute request to AlloCine API
 		case "api_request":
@@ -93,7 +92,6 @@ public class CinemaServlet extends HttpServlet {
 		}
 		String jsonResp = AlloCineAPIHandler.getInstance().doQuery(query);
 		PrintWriter out = response.getWriter();
-		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 		out.write(jsonResp);
 		out.close();

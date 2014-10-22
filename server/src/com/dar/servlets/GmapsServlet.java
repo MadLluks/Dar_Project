@@ -37,7 +37,6 @@ public class GmapsServlet extends HttpServlet {
 		
 		String origin, destination, mode;
 		PrintWriter out = response.getWriter();
-		response.addHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("application/json");
 		String jsonResp = "";
 		if(request.getParameter("origin") != null
