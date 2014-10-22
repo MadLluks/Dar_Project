@@ -72,7 +72,6 @@ public class GmapsAPIHandler {
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(response);
 		return response;
 	}
 	
