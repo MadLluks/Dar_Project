@@ -88,8 +88,8 @@ public class CinemaServlet extends HttpServlet {
 		String jsonResp = AlloCineAPIHandler.getInstance().doQuery(query);
 		PrintWriter out = response.getWriter();
 		out.write(jsonResp);
-		out.close();
 		out.flush();
+		out.close();		
 	}
 	
 	/**
