@@ -11,3 +11,4 @@ server/.settings
 server/RemoteSystemsTempFiles
 
 server/.classpath
+server/.settings/
