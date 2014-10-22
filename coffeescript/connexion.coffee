@@ -1,8 +1,5 @@
 $(document).on "click", ".login-btn", () ->
-	#LoginManager.GetPage()
-	tab = 
-		"q":"turtle"
-	Search.GetAll(tab)
+	LoginManager.GetPage()
 	return false
 
 success = (data, param) ->

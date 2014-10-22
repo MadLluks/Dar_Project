@@ -87,6 +87,7 @@
 
 			span {
 				@include font-title();
+				color: white;
 				text-transform: capitalize;
 				vertical-align: middle;
 				line-height: 37px;

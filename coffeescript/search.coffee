@@ -45,9 +45,10 @@ class window.Search
 		if this.movielist == null
 			$.ajax
 				type: "GET"
-				url: "http://api.allocine.fr/rest/v3/movielist?partner=#{this.partner}"
-				async: false
+				url: "http://localhost:8080/server/cinema"
 				data:
+					action: "api_request"
+					type: "movielist"
 					count: "25"
 					filter: "nowshowing"
 					page: "1"
