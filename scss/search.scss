@@ -14,10 +14,23 @@
 	}
 
 	.weekly-movies {
-		p {
-			margin-bottom: 0px;
-			color: rgb(127, 0, 0);
-			//text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+		div {
+			&.movie {
+				p {
+					margin-bottom: 0px;
+					color: rgb(127, 0, 0);
+					//text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+				}
+			}
+		}
+	}
+
+	.slick-slide {
+		height: 400px;
+
+		img {
+			max-height: 400px;
+			width: 100%;
 		}
 	}
 }

@@ -21,7 +21,7 @@ body {
 	margin-bottom: 40px;
 }
 
-.title {
-	@include font-title-size(12px);
+p.error {
+	color: rgb(127, 0, 0) !important;
+	@include font-title-size(15px);
 }
-

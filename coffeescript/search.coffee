@@ -45,9 +45,10 @@ class window.Search
 		if this.movielist == null
 			$.ajax
 				type: "GET"
-				url: "http://api.allocine.fr/rest/v3/movielist?partner=" + this.partner
-				async: false
+				url: "http://localhost:8080/server/cinema"
 				data:
+					action: "api_request"
+					type: "movielist"
 					count: "25"
 					filter: "nowshowing"
 					page: "1"
@@ -56,20 +57,22 @@ class window.Search
 				success: (msg) ->
 					
 					for movie in msg.feed.movie
-						element = "<div>"
-						element += "<p class=\"title\">"+movie.title+"</p>"
-						element += "<img src=\""+movie.poster.href+"\"/>"
+						element = "<div class=\"movie\">"
+						element += "<p class=\"title\">#{movie.title}</p>"
+						element += "<img src=\"#{movie.poster.href}\"/>"
 						element += "</div>"
 						$(".weekly-movies").append(element)
 
 					$(document).ready( () ->
 						$('.weekly-movies').slick(
 						 	slidesToShow: 3
-							slidesToScroll: 1
+							slidesToScroll: 3
 							autoplay: true
 							autoplaySpeed: 2000
 						)
 					)
 
-				error: (msg) ->
-					alert "error"
+				error: (data, err) ->
+					if data.statusText.search(/NetworkError/) >= 0
+						response = "Impossible d'établir la connexion avec le serveur."
+						$(".weekly-movies").append "<p class=\"error\">#{response}</p>"

@@ -3,15 +3,21 @@ window.ViewManager = (function() {
   function ViewManager() {}
 
   ViewManager.Init = function() {
-    $.get("./view/header.html", function(data) {
-      return $("#header").html(data);
-    });
+    if ($("#header").children().length === 0) {
+      $.get("./view/header.html", function(data) {
+        return $("#header").html(data);
+      });
+    }
 
     /*$.get "./view/footer.html", (data) ->
     			$("#footer").html data
      */
-    return $.get("./view/home.html", function(data) {
+    $.get("./view/home.html", function(data) {
       return $("#content").html(data);
+    });
+    return $("body").on("click", "a.viewmanager", function() {
+      ViewManager.Load(this.classList[1]);
+      return false;
     });
   };
 

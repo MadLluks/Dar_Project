@@ -1,6 +1,7 @@
 @mixin font-title() {
 	font-family: 'Lobster', cursive !important;
-	font-color: black ;
+	src: url('fonts/Lobster-Regular.ttf');
+	color: black ;
 }
 
 @mixin font-title-size($size) {
@@ -9,11 +10,32 @@
 }
 
 @mixin font-text() {
-	font-family: 'PT Serif', serif !important;
+	font-family: 'PT Serif', Serif !important;
 	color: black;
 }
 
 @mixin font-text-size($size) {
 	@include font-text();
 	font-size: $size;
+}
+
+@mixin button() {
+	@include font-text-size(16px);
+	height: 37px;
+
+	color: white;
+	background-color: rgb(127, 0, 0);
+	border: 2px solid black;
+
+	display: inline-block;
+
+	border-radius: 10px;
+	box-shadow: 3px 3px 2px #888888;
+
+	text-align: center;
+
+	&:hover {
+		background-color: #333;
+		box-shadow: 1px 1px 2px #888888;
+	}
 }
