@@ -46,7 +46,7 @@ public class Cinema extends AbstractBean{
 		return "{name: "+", cine_id: "+cine_id+", location: "+this.location.toJson()+"}";
 	}
 	
-	private void load() {
+	public boolean load() {
 		if(this.cine_id != null){
 			// here we want to load our location
 			PreparedStatement prestmt = null;
@@ -105,6 +105,7 @@ public class Cinema extends AbstractBean{
 				}
 			}
 		}	
+		return this.exists;
 	}
 	
 	public Location getLocation(){
