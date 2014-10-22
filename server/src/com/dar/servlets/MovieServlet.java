@@ -40,7 +40,7 @@ public class MovieServlet extends HttpServlet {
 			for(Movie m : movies){
 				jsonResp += m.toJson()+", ";
 			}
-			jsonResp = "{success: true, result: "+jsonResp+"}";
+			jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
 			PrintWriter out = response.getWriter();
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
@@ -51,7 +51,7 @@ public class MovieServlet extends HttpServlet {
 		else{
 			PrintWriter out = response.getWriter();
 			response.setContentType("application/json");			
-			out.print("{success: false, error: not_logged_in}");
+			out.print("{\"success\": false, \"error\": \"not_logged_in\"}");
 			out.flush();
 			out.close();
 		}
@@ -68,7 +68,7 @@ public class MovieServlet extends HttpServlet {
 		// user must be logged in
 		User user = (User) request.getSession().getAttribute("user");
 		if(user == null){
-			out.print("{success : false, error : login_required}");
+			out.print("{\"success\" : false, \"error\" : \"login_required\"}");
 			out.flush();
 			out.close();
 			return;
@@ -87,7 +87,7 @@ public class MovieServlet extends HttpServlet {
 				throw new Exception(); 
 		}
 		catch(Exception e){
-			out.print("{success : false, error : missing_parameter}");
+			out.print("{\"success\" : false, \"error\" : \"missing_parameter\"}");
 			out.flush();
 			out.close();
 			return;
