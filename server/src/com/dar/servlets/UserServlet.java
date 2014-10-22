@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +32,7 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		// check if user is logged in
 		User user = (User) request.getSession().getAttribute("user");
 		if(user != null){
@@ -56,15 +57,14 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = "";
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("application/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		try{
 			action = request.getParameter("action");
 		}
 		catch(Exception e){
-			PrintWriter out = response.getWriter();
-			response.setContentType("application/json");
-			response.addHeader("Access-Control-Allow-Origin", "*");
-			out.print("{success : false, error : no_action_set}");
+			PrintWriter out = response.getWriter();					
+			out.print("{\"success\" : false, \"error\" : \"no_action_set\"}");
 			out.flush();
 			out.close();
 			return;
@@ -110,6 +110,8 @@ public class UserServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
 			jsonResponse = "{\"success\": true}";
+			Cookie c = new Cookie("user", user.getLogin());
+			response.addCookie(c);
 		}
 		else{
 			jsonResponse = "{\"success\": false, \"error\" : \"wrong_credentials\"}";
@@ -129,20 +131,20 @@ public class UserServlet extends HttpServlet {
 			password = request.getParameter("password");
 		}
 		catch(Exception e){
-			out.print("{success : false, error : \"missing_parameter\"}");
+			out.print("{\"success\" : false, \"error\" : \"missing_parameter\"}");
 			out.flush();
 			return;
 	    }
 		User user = new User(login, password);
 		if(user.load())
-			jsonResponse = "{success : false, error : \"login_exists\"}";		
+			jsonResponse = "{\"success\" : false, error : \"login_exists\"}";		
 		else{
 			if(user.save()){				
 				request.getSession().setAttribute("user", user);
-				jsonResponse = "{success : true}";
+				jsonResponse = "{\"success\" : true}";
 			}
 			else
-				jsonResponse = "{success : false, error: \"insert_error\"}";
+				jsonResponse = "{\"success\" : false, \"error\": \"insert_error\"}";
 		}
 		out.print(jsonResponse);
 		out.flush();
