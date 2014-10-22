@@ -46,7 +46,7 @@ public class User extends AbstractBean{
 		this.modified = true;
 		this.password = password;
 	}
-		
+			
 	public boolean load(){
 		return this.load(login, password);
 	}
@@ -102,24 +102,31 @@ public class User extends AbstractBean{
 	
 	public ArrayList<Cinema> getCinemaVisited(){
 		ArrayList<Cinema> result = new ArrayList<Cinema>();
-		PreparedStatement prestmt;
+		PreparedStatement prestmt=null;
+		ResultSet res = null;
 		try {
 			String query = "SELECT c.cine_name cine_name, c.cine_id cine_id, l.lat lat, l.lon lon FROM movie_seen ms, location l ";
 			query += "WHERE ms.cine_id = c.cine_id AND l.loc_id = c.loc_id AND ms.login = ? ";
 			prestmt = this.conn.prepareStatement(query);
 			prestmt.setString(1, login);
-			ResultSet res = prestmt.executeQuery();
+			res = prestmt.executeQuery();
 			while(res.next()){
 				String name = res.getString("cine_name");
 				float lat = Float.valueOf(res.getString("lat"));
 				float lon = Float.valueOf(res.getString("lon"));
 				int cine_id = res.getInt("cine_id");
 				result.add(new Cinema(cine_id, name, lat, lon));
-			}
-			res.close();
-			prestmt.close();
+			}			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		finally{
+			try {
+				res.close();
+				prestmt.close();					
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
 		}
 		return result;
 	}
@@ -204,14 +211,6 @@ public class User extends AbstractBean{
 		private User user;
 		private Connection conn;
 		
-		public Movie getMovie() {
-			return movie;
-		}
-		
-		public User getUser(){
-			return user;
-		}
-
 		public SeenMovie(Movie movie, Cinema cinema, User u) {
 			this.movie = movie;
 			this.setCinema(cinema);			
@@ -220,6 +219,14 @@ public class User extends AbstractBean{
 			this.save();
 		}
 
+		public Movie getMovie() {
+			return movie;
+		}
+		
+		public User getUser(){
+			return user;
+		}
+		
 		@Override
 		protected boolean update() {
 			boolean success = this.cinema.save();
@@ -278,8 +285,6 @@ public class User extends AbstractBean{
 
 		public void setCinema(Cinema cinema) {
 			this.cinema = cinema;
-		}
-		
+		}		
 	}
-
 }

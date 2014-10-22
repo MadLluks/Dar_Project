@@ -1,0 +1,69 @@
+##############
+#### User ####
+##############
+# login
+URL :  /user 
+TYPE : POST  
+DATA : action=login
+       login=?
+       password=?
+  
+# register
+URL :  /user 
+TYPE : POST  
+DATA : action=register
+       login=?
+       password=?
+
+###############
+#### Movie ####
+###############
+# Get movies seen by current user
+URL : /movie
+TYPE : GET
+DATA : None 
+Condition : User must be logged in
+
+# Set movie as visited for current user
+URL : /movie
+TYPE : POST
+DATA : title
+       movie_id (the one given by AlloCine API)
+       cine_lon
+       cine_lat
+       cine_name
+
+################
+#### Cinema ####
+################
+# List cinemas visited by user
+URL : /cinema
+TYPE : GET
+DATA : action=user_list
+Condition : User must be logged in.
+
+##################
+#### AlloCine ####
+##################
+# Make request to AlloCine API
+URL : /cinema
+TYPE : GET
+DATA : action=user_list
+       any tuple (arg_name, arg) that should be passed to the API
+       
+###############
+#### Gmaps ####
+###############
+# Find path from origin to destination with a specific mode
+URL : /gmaps
+TYPE : GET
+DATA : origin=?
+       destination=?
+       mode=?
+
+# Get fastest path and mode between origin and destination
+URL : /gmaps
+TYPE : GET
+DATA : origin=?
+       destination=?
+
