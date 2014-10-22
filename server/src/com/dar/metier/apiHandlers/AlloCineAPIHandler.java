@@ -38,12 +38,12 @@ public class AlloCineAPIHandler {
 		        	response+=line;
 		        }
 		    }
-			response = "{success: true, result: "+response+"}";
+			response = "{\"success\": true, \"result\": "+response+"}";
 		} catch (MalformedURLException e) {
-			response = "{success: false, error: malformed_url}";
+			response = "{success: false, error: \"malformed_url\"}";
 			e.printStackTrace();
 		} catch (IOException e) {
-			response = "{success: false, error: io_exception}";
+			response = "{\"success\": false, \"error\": \"io_exception\"}";
 			e.printStackTrace();
 		}
 		

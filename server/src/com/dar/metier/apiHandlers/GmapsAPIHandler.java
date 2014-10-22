@@ -36,7 +36,7 @@ public class GmapsAPIHandler {
 	}
 	
 	/*
-	 * TODO iterate over all modes (driving, walking, etc.) 
+	 * iterate over all modes (driving, walking, etc.) 
 	 * return the fastest complete direction
 	 */
 	public String findFastestDirection(String origin, String destination){
