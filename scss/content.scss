@@ -74,13 +74,12 @@
 			@include font-text-size(16px);
 			height: 37px;
 
-			color: white;
-			background-color: #333333;
+			@include button();
 
 			display: inline-block;
 
-			border-top-right-radius: 10px;
-			border-bottom-right-radius: 10px;
+			border-top-left-radius: 0px !important;
+			border-bottom-left-radius: 0px !important;
 			box-shadow: 3px 3px 2px #888888;
 
 			text-align: center;

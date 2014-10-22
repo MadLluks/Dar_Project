@@ -15,7 +15,7 @@ window.ViewManager = (function() {
     $.get("./view/home.html", function(data) {
       return $("#content").html(data);
     });
-    return $("body").on("click", "a", function() {
+    return $("body").on("click", "a.viewmanager", function() {
       ViewManager.Load(this.classList[1]);
       return false;
     });

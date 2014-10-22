@@ -11,7 +11,7 @@ class window.ViewManager
 		$.get "./view/home.html", (data) ->
 			$("#content").html data
 
-		$("body").on "click", "a", () ->
+		$("body").on "click", "a.viewmanager", () ->
 			ViewManager.Load this.classList[1]
 			return false
 

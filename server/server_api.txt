@@ -48,7 +48,7 @@ Condition : User must be logged in.
 # Make request to AlloCine API
 URL : /cinema
 TYPE : GET
-DATA : action=api_request
+DATA : action=user_list
        type=? (search, ...)
        any tuple (arg_name, arg) that should be passed to the API
        
