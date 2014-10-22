@@ -10,7 +10,7 @@ import java.net.URLConnection;
 
 public class AlloCineAPIHandler {
 	private static final String PARTNER = "YW5kcm9pZC12M3M";
-	private static final String ALLOCINE_URL_QUERY = "http://api.allocine.fr/rest/v3/search?partner="+PARTNER+"format=json&";
+	private static final String ALLOCINE_URL_QUERY = "http://api.allocine.fr/rest/v3/";
 	private static final String URL_CHARSET = "UTF-8";
 	private static AlloCineAPIHandler handler = null;
 	
@@ -29,7 +29,7 @@ public class AlloCineAPIHandler {
 		URLConnection connection;
 		String response = "";
 		try {
-			connection = new URL(ALLOCINE_URL_QUERY+query).openConnection();
+			connection = new URL(ALLOCINE_URL_QUERY+query+"partner="+PARTNER+"&format=json").openConnection();
 			connection.setRequestProperty("Accept-Charset", URL_CHARSET);
 			InputStream res = connection.getInputStream();
 			
@@ -40,7 +40,7 @@ public class AlloCineAPIHandler {
 		    }
 			response = "{\"success\": true, \"result\": "+response+"}";
 		} catch (MalformedURLException e) {
-			response = "{success: false, error: \"malformed_url\"}";
+			response = "{\"success\": false, \"error\": \"malformed_url\"}";
 			e.printStackTrace();
 		} catch (IOException e) {
 			response = "{\"success\": false, \"error\": \"io_exception\"}";

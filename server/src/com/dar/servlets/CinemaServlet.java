@@ -79,8 +79,10 @@ public class CinemaServlet extends HttpServlet {
 	}
 
 	private void alloCineRequest(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		request.removeAttribute("action");
-		String query = "";
+		request.removeAttribute("action");		
+		String type = (String) request.getAttribute("type");
+		String query = type+"?";
+		request.removeAttribute("type");
 		Enumeration<String> names = request.getAttributeNames();
 		while(names.hasMoreElements()){
 			String e = names.nextElement();

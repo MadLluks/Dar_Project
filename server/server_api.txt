@@ -49,6 +49,7 @@ Condition : User must be logged in.
 URL : /cinema
 TYPE : GET
 DATA : action=user_list
+       type=? (search, ...)
        any tuple (arg_name, arg) that should be passed to the API
        
 ###############
