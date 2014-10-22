@@ -124,6 +124,7 @@ public class UserServlet extends HttpServlet {
 		String jsonResponse = "";
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		try{
 			login = request.getParameter("login");
 			password = request.getParameter("password");

@@ -34,6 +34,7 @@ public class CinemaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = (String) request.getSession().getAttribute("action");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		switch(action){
 		// execute request to AlloCine API
 		case "api_request":
