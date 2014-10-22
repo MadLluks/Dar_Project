@@ -9,9 +9,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.dar.beans.Cinema;
-import com.dar.beans.Movie;
 import com.dar.beans.User;
 
 /**
@@ -37,14 +34,14 @@ public class UserServlet extends HttpServlet {
 		if(user != null){
 			//this.getServletContext().getRequestDispatcher( "/WEB-INF/index.jsp" ).forward( request, response );
 			// TODO REMOVE : test only
-			Cinema c = new Cinema("Premier cinéma", 1.429504f, 2.504950f);
-			user.addSeenMovie(new Movie("P111", "Le dernier des mohicans"), c);
-			Movie m = new Movie("P222");
-			Movie m2 = new Movie("P111");
-			System.out.println(m.toJson());
-			System.out.println(m2.toJson());
-			Cinema c2 = new Cinema("Premier cinéma", 1.429504f, 2.504950f);
-			System.out.println("C2 : "+c2.getExists());
+//			Cinema c = new Cinema("Premier cinéma", 1.429504f, 2.504950f);
+//			user.addSeenMovie(new Movie("P111", "Le dernier des mohicans"), c);
+//			Movie m = new Movie("P222");
+//			Movie m2 = new Movie("P111");
+//			System.out.println(m.toJson());
+//			System.out.println(m2.toJson());
+//			Cinema c2 = new Cinema("Premier cinéma", 1.429504f, 2.504950f);
+//			System.out.println("C2 : "+c2.getExists());
 		}
 		// not logged in, can load login page
 		else
@@ -76,7 +73,6 @@ public class UserServlet extends HttpServlet {
 				break;
 			default:
 				PrintWriter out = response.getWriter();
-				response.setContentType("application/json");
 				out.print("{\"success\" : false, \"error\" : \"unknown_action\"}");
 				out.flush();
 				out.close();
@@ -89,7 +85,6 @@ public class UserServlet extends HttpServlet {
 		String login,password;
 		String jsonResponse = "";
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
 		try{
 			login = request.getParameter("login");
 			password = request.getParameter("password");
@@ -100,12 +95,9 @@ public class UserServlet extends HttpServlet {
 			out.close();
 			return;
 	    }
-
 		User user = new User();
 		if(user.load(login, password)){
 			request.getSession().setAttribute("user", user);
-			response.setContentType("application/json");
-			response.setStatus(HttpServletResponse.SC_OK);
 			jsonResponse = "{\"success\": true}";
 			Cookie c = new Cookie("user", user.getLogin());
 			response.addCookie(c);
@@ -122,7 +114,6 @@ public class UserServlet extends HttpServlet {
 		String login,password;
 		String jsonResponse = "";
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
 		try{
 			login = request.getParameter("login");
 			password = request.getParameter("password");

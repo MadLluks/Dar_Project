@@ -11,14 +11,7 @@ public class Movie extends AbstractBean{
 	
 	private String movie_id; // Allocine key looks like P12345 
 	private String title;
-	//private Cinema cinema;
 	private Connection conn;
-		
-//	public Movie(String title, Cinema cinema) {
-//		conn = DBHandler.getInstance();
-//		this.setTitle(title);
-//		this.cinema = cinema;
-//	}
 
 	public Movie(String movie_id, String title) {
 		conn = DBHandler.getInstance();
@@ -56,21 +49,29 @@ public class Movie extends AbstractBean{
 	}
 	
 	public boolean exists(){
-		PreparedStatement prestmt;
+		PreparedStatement prestmt = null;
+		ResultSet res = null;
 		boolean exists = false;
 		try {
 			String query = "SELECT title FROM movie WHERE movie_id = ?";
 			prestmt = this.conn.prepareStatement(query);
 			prestmt.setString(1, movie_id);
-			ResultSet res = prestmt.executeQuery();
+			res = prestmt.executeQuery();
 			if(res.next()){
 				this.title = res.getString("title");
 				exists = true;
-			}
-			res.close();
-			prestmt.close();
+			}			
 		}catch(SQLException e){
 			e.printStackTrace();
+		} finally{
+			try {
+				if(res != null)
+					res.close();
+				if(res != null)
+					prestmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
 		}
 		return exists;		
 	}

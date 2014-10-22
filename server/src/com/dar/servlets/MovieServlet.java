@@ -32,6 +32,7 @@ public class MovieServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json");
 		// Get movies saved by current user
 		User user = (User) request.getSession().getAttribute("user");
 		if(user != null){
@@ -42,15 +43,12 @@ public class MovieServlet extends HttpServlet {
 			}
 			jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
 			PrintWriter out = response.getWriter();
-			response.setContentType("application/json");
-			response.setStatus(HttpServletResponse.SC_OK);
 			out.print(jsonResp);
 			out.flush();
 			out.close();
 		}
 		else{
 			PrintWriter out = response.getWriter();
-			response.setContentType("application/json");			
 			out.print("{\"success\": false, \"error\": \"not_logged_in\"}");
 			out.flush();
 			out.close();

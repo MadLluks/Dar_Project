@@ -75,7 +75,7 @@ public class Location extends AbstractBean{
 	@Override
 	protected boolean exists(){
 		if(!exists){
-			PreparedStatement prestmt;
+			PreparedStatement prestmt = null;
 			try {
 				prestmt = this.conn
 						.prepareStatement("SELECT loc_id FROM location WHERE lat = ? AND lon = ?");
@@ -86,43 +86,58 @@ public class Location extends AbstractBean{
 					this.loc_id = res.getInt("loc_id");
 					exists = true;
 				}
-				prestmt.close();
 			}catch(SQLException e){}
+			finally{
+				if(prestmt != null)
+					try {
+						prestmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			}
 		}
 		return exists;
 	}
 
 	public boolean load(){
-		PreparedStatement prestmt;
+		PreparedStatement prestmt = null;
+		ResultSet res=null;
 		try {
 			if(this.loc_id != null){
 				prestmt = this.conn
 						.prepareStatement("SELECT lat,lon FROM location WHERE loc_id = ?");
 				prestmt.setInt(1,loc_id);
-				ResultSet res = prestmt.executeQuery();
+				res = prestmt.executeQuery();
 				if(res.next()){
 					this.lat = res.getFloat("lat");
 					this.lon = res.getFloat("lon");
 					this.exists = true;
 				}
-				res.close();
 			}
 			else{
 				prestmt = this.conn
 						.prepareStatement("SELECT loc_id FROM location WHERE lat = ? AND lon = ?");
 				prestmt.setFloat(1, lat);
 				prestmt.setFloat(2, lon);
-				ResultSet res = prestmt.executeQuery();
+				res = prestmt.executeQuery();
 				if(res.next()){
 					this.loc_id = res.getInt("loc_id");
 					this.exists = true;
 				}
-				res.close();
 			}			
 			prestmt.close();
 		}catch(SQLException e){
 			e.printStackTrace();
-		}
+		} finally{			
+			try {
+				if(res != null)
+					res.close();
+				if(prestmt != null)
+					prestmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}			
+		}		
 		return this.exists;
 	}
 	
@@ -131,18 +146,24 @@ public class Location extends AbstractBean{
 		boolean success = false;
 		modified = false;
 		String query = "UPDATE location SET lat = ?, lon = ? WHERE loc_id = ?";			
-		PreparedStatement prestmt;
+		PreparedStatement prestmt = null;
 		try {				
 			prestmt = this.conn.prepareStatement(query);
 			prestmt.setFloat(1, lat);
 			prestmt.setFloat(2, lon);
 			prestmt.setInt(3, loc_id);
 			prestmt.executeUpdate();		
-			prestmt.close();
 			this.exists = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			success = false;
+		} finally{
+			try {
+				if(prestmt != null)
+					prestmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return success;
 	}
@@ -153,22 +174,28 @@ public class Location extends AbstractBean{
 		boolean success = false;
 		modified = false;		
 		String query = "INSERT INTO location(lat, lon) VALUES(?, ?)";
-		PreparedStatement prestmt;
+		PreparedStatement prestmt = null;
+		ResultSet res = null;
 		try {				
 			prestmt = this.conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			System.out.println("lat,lon = "+lat+","+lon);
 			prestmt.setFloat(1, lat);
 			prestmt.setFloat(2, lon);
 			prestmt.executeUpdate();
-			ResultSet res = prestmt.getGeneratedKeys();
+			res = prestmt.getGeneratedKeys();
 			this.loc_id = res.getInt(1);
-			System.out.println("loc_id : "+this.loc_id);
-			res.close();
-			prestmt.close();
 			this.exists = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			success = false;
+		} finally{
+			try {
+				if(res != null)
+					res.close();
+				if(prestmt != null)
+					prestmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}			
 		}
 		return success;
 	}

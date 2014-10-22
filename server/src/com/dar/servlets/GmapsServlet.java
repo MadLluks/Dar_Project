@@ -48,7 +48,6 @@ public class GmapsServlet extends HttpServlet {
 			
 			destination = (String) request.getParameter("destination");
 			origin = (String) request.getParameter("origin");
-			System.out.println(origin+" "+destination+" "+mode);
 			GmapsAPIHandler gmaps = GmapsAPIHandler.getInstance();			
 
 			try{
@@ -57,7 +56,6 @@ public class GmapsServlet extends HttpServlet {
 				else
 					jsonResp = gmaps.doQuery(origin, destination, mode);
 				jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
-				response.setStatus(HttpServletResponse.SC_OK);
 			}
 			catch(IOException e){
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

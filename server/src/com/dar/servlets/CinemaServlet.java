@@ -33,9 +33,8 @@ public class CinemaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json");
 		String action = (String) request.getParameter("action");
-		System.out.println((String) request.getParameter("type"));
-		System.out.println(action);		
 		switch(action){
 		// execute request to AlloCine API
 		case "api_request":
@@ -46,8 +45,7 @@ public class CinemaServlet extends HttpServlet {
 			listCinemasByUser(request, response);
 			break;
 		default:
-			PrintWriter out = response.getWriter();
-			response.setContentType("application/json");			
+			PrintWriter out = response.getWriter();		
 			out.print("{\"success\": false, \"error\": \"unknown_action\"}");
 			out.flush();
 			out.close();
@@ -65,16 +63,13 @@ public class CinemaServlet extends HttpServlet {
 			}
 			jsonResp = "{\"success\": true, \"result: "+jsonResp+"}";
 			PrintWriter out = response.getWriter();
-			response.setContentType("application/json");
-			response.setStatus(HttpServletResponse.SC_OK);
 			out.print(jsonResp);
 			out.flush();
 			out.close();
 		}
 		else{
-			PrintWriter out = response.getWriter();
-			response.setContentType("application/json");			
-			out.print("{\"success\": false, \"error\": \"not_logged_in\"}");
+			PrintWriter out = response.getWriter();		
+			out.print("{\"success\": false, \"error\": \"login_required\"}");
 			out.flush();
 			out.close();
 		}
@@ -88,11 +83,10 @@ public class CinemaServlet extends HttpServlet {
 		Enumeration<String> names = request.getParameterNames();
 		while(names.hasMoreElements()){
 			String e = names.nextElement();
-			query += e+"="+request.getParameter(e)+"&";
+			query += e+"="+request.getParameter(e).replace("%2C", ",")+"&";
 		}
 		String jsonResp = AlloCineAPIHandler.getInstance().doQuery(query);
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
 		out.write(jsonResp);
 		out.close();
 		out.flush();
@@ -102,7 +96,6 @@ public class CinemaServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

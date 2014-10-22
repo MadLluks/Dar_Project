@@ -42,7 +42,6 @@ public class Cinema extends AbstractBean{
 	}
 	
 	public String toJson(){
-		// TODO cine_id may be null
 		return "{name: "+", cine_id: "+cine_id+", location: "+this.location.toJson()+"}";
 	}
 	
@@ -68,12 +67,13 @@ public class Cinema extends AbstractBean{
 			}
 			finally{
 				try {
-					res.close();
-					prestmt.close();
+					if(res != null)
+						res.close();
+					if(prestmt != null)
+						prestmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-				}
-				
+				}				
 			}
 		}
 		else if(this.location != null){
@@ -122,22 +122,31 @@ public class Cinema extends AbstractBean{
 		modified = false;
 		location.save();
 		String query = "INSERT INTO cinema(cine_name, loc_id) VALUES(?,?)";
-		PreparedStatement prestmt;
+		PreparedStatement prestmt = null;
+		ResultSet res = null;
 		try {				
 			prestmt = this.conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			prestmt.setString(1, cine_name);
 			prestmt.setInt(2, location.getLoc_id());
 			prestmt.executeUpdate();
-			ResultSet res = prestmt.getGeneratedKeys();
-			this.cine_id = res.getInt(1);
-			res.close();
-			prestmt.close();
-			
+			res = prestmt.getGeneratedKeys();
+			this.cine_id = res.getInt(1);						
 			this.exists = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			success = false;
+		} finally{
+			try {
+				if(res != null)
+					res.close();
+				if(prestmt != null)
+					prestmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
+		
 		return success;
 	}
 	
@@ -147,17 +156,23 @@ public class Cinema extends AbstractBean{
 		modified = false;
 		location.save();
 		String query = "UPDATE cinema SET cine_name = ? WHERE cine_id = ?";			
-		PreparedStatement prestmt;
+		PreparedStatement prestmt = null;
 		try {				
 			prestmt = this.conn.prepareStatement(query);
 			prestmt.setString(1, cine_name);
 			prestmt.setInt(2, cine_id);
-			prestmt.executeUpdate();		
-			prestmt.close();
+			prestmt.executeUpdate();					
 			this.exists = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			success = false;
+		} finally{
+			try {
+				if(prestmt != null)
+					prestmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return success;
 	}
@@ -177,7 +192,8 @@ public class Cinema extends AbstractBean{
 	@Override
 	protected boolean exists() {
 		if(!exists){
-			PreparedStatement prestmt;
+			PreparedStatement prestmt = null;
+			ResultSet res = null;
 			try {
 				if(this.cine_id != null){
 					prestmt = this.conn
@@ -189,12 +205,20 @@ public class Cinema extends AbstractBean{
 							.prepareStatement("SELECT cine_id FROM cinema WHERE name = ?");
 					prestmt.setString(1, cine_name);
 				}
-				ResultSet res = prestmt.executeQuery();
+				res = prestmt.executeQuery();
 				if(res.next())
-					exists = true;
-				res.close();
-				prestmt.close();
+					exists = true;				
 			}catch(SQLException e){}
+			finally{
+				try {
+					if(res != null)
+						res.close();
+					if(prestmt != null)
+						prestmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}				
+			}
 		}
 		return exists;
 	}

@@ -44,29 +44,40 @@ public class GmapsAPIHandler {
 		try {
 			String query_driving = doQuery(origin, destination, "driving");
 			String query_walking = doQuery(origin, destination, "walking");
-			String query_bicycling= doQuery(origin, destination, "bicycling");
+			String query_bicycling = doQuery(origin, destination, "bicycling");
+			String query_transit = doQuery(origin, destination, "transit");
 			JSONObject json = new JSONObject(query_driving);
+			
 			int d_driving = Integer.MAX_VALUE;
 			if(json.get("status") == "OK")
 				d_driving = json.getJSONArray("routes").getJSONObject(0)
 								.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");			
 			json = new JSONObject(query_walking);
+			
 			int d_walking = Integer.MAX_VALUE;
 			if(json.get("status") == "OK")
 				d_walking = json.getJSONArray("routes").getJSONObject(0)
 					.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
 			
 			json = new JSONObject(query_bicycling);
+			
 			int d_bicycling = Integer.MAX_VALUE;
 			if(json.get("status") == "OK")
 				d_bicycling = json.getJSONArray("routes").getJSONObject(0)
 					.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
 			
-			if(d_driving < d_walking && d_driving < d_bicycling)
+			int d_transit = Integer.MAX_VALUE;
+			if(json.get("status") == "OK")
+				d_transit = json.getJSONArray("routes").getJSONObject(0)
+								.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
+			
+			if(d_driving < d_walking && d_driving < d_bicycling && d_driving < d_transit)
 				response = query_driving;
-			if(d_walking <= d_driving && d_walking < d_bicycling)
+			if(d_walking <= d_driving && d_walking < d_bicycling && d_walking < d_transit)
 				response = query_walking;
-			if(d_bicycling <= d_walking && d_bicycling <= d_driving)
+			if(d_transit <= d_driving && d_transit < d_bicycling && d_transit < d_walking)
+				response = query_transit;
+			if(d_bicycling <= d_walking && d_bicycling <= d_driving && d_bicycling <= d_transit)
 				response = query_bicycling;
 			
 		} catch (JSONException | IOException e) {
