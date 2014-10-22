@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -109,6 +110,8 @@ public class UserServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
 			jsonResponse = "{\"success\": true}";
+			Cookie c = new Cookie("user", user.getLogin());
+			response.addCookie(c);
 		}
 		else{
 			jsonResponse = "{\"success\": false, \"error\" : \"wrong_credentials\"}";
