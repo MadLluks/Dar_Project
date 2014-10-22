@@ -1,0 +1,23 @@
+@import "variables";
+
+#weekly-movies-zone {
+	border-top: solid 2px #333;
+	margin-top: 20px;
+
+	h2 {
+		@include font-title-size(30px);
+		text-align: center;
+	}
+
+	.slick-prev:before, .slick-next:before {
+		color: rgb(127, 0, 0);
+	}
+
+	.weekly-movies {
+		p {
+			margin-bottom: 0px;
+			color: rgb(127, 0, 0);
+			//text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+		}
+	}
+}
