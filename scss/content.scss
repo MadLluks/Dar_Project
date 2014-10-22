@@ -4,8 +4,6 @@
 	@include font-text-size(15px);
 
 	p {
-		@include font-text-size(15px);
-
 		&.title {
 			@include font-title-size(18px);
 			text-align: center;

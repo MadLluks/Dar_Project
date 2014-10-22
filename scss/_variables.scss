@@ -1,6 +1,7 @@
 @mixin font-title() {
 	font-family: 'Lobster', cursive !important;
-	font-color: black ;
+	src: url('fonts/Lobster-Regular.ttf');
+	color: black ;
 }
 
 @mixin font-title-size($size) {
@@ -9,7 +10,7 @@
 }
 
 @mixin font-text() {
-	font-family: 'PT Serif', serif !important;
+	font-family: 'PT Serif', Serif !important;
 	color: black;
 }
 
