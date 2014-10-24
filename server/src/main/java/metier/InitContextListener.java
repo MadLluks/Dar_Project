@@ -12,8 +12,6 @@ public class InitContextListener implements javax.servlet.ServletContextListener
 
 	@Override
 	public void contextInitialized(ServletContextEvent contextEvent) {
-		System.out.println("Working Directory = " +
-	              System.getProperty("user.dir"));
 		DBHandler.setPath("src/main/resources/dar.db");
 	}
 
