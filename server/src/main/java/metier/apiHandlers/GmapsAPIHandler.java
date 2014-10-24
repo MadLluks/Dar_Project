@@ -9,11 +9,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import main.java.metier.PropertiesValues;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class GmapsAPIHandler {
-	private static final String GMAPS_API_KEY = "AIzaSyAMDGS_wjPjHSGSKPJfM2cIwkWAfoUMXds";
+	private static final String GMAPS_API_KEY = PropertiesValues.getRessource("gmaps_api_key");
 	private static final String GMAPS_URL_QUERY = "https://maps.googleapis.com/maps/api/directions/json?";
 	private static final String URL_CHARSET = "UTF-8";
 	private static GmapsAPIHandler gmaps = null;
