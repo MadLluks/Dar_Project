@@ -1,0 +1,3 @@
+:::term
+web: sh target/bin/webapp
+
