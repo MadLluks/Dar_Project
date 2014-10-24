@@ -1,3 +1,5 @@
+adress = "http://test"
+
 class window.ViewManager
 	@Init: () =>
 
@@ -15,6 +17,13 @@ class window.ViewManager
 			ViewManager.Load this.classList[1]
 			return false
 
-	@Load: (pageName) ->
+	@Load: (pageName, args) ->
+		if pageName != "home"
+			$("#header").children().remove()
 		$.get "./view/"+pageName+".html", (data) ->
 			$("#content").html data
+
+		switch pageName
+			when "movie" then MovieManager.Init(args)
+			when "location" then LocationManager.Init(args)
+

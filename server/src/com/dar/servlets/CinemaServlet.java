@@ -85,6 +85,7 @@ public class CinemaServlet extends HttpServlet {
 			String e = names.nextElement();
 			query += e+"="+request.getParameter(e).replace("%2C", ",")+"&";
 		}
+		System.out.println(query);
 		String jsonResp = AlloCineAPIHandler.getInstance().doQuery(query);
 		PrintWriter out = response.getWriter();
 		out.write(jsonResp);

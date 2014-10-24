@@ -49,7 +49,8 @@ public class GmapsServlet extends HttpServlet {
 			destination = (String) request.getParameter("destination");
 			origin = (String) request.getParameter("origin");
 			GmapsAPIHandler gmaps = GmapsAPIHandler.getInstance();			
-
+			
+			System.out.println(origin);
 			try{
 				if(mode == "none")
 					jsonResp = gmaps.findFastestDirection(origin, destination);

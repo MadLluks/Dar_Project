@@ -1,10 +1,7 @@
-<p>Commencez par rechercher le film que vous voulez voir.<br/>
-Pour cela des filtres vous permettent de choisir si vous voulez faire une recherche par personne, par cinéma ou par film.</p>
-
 <ul id="search-filter">
-	<li><label><input type="checkbox" name="author" value="author" checked="checked" />Nom de personne</label></li>
-	<li><label><input type="checkbox" name="theater" value="theater" checked="checked" />Nom de cinéma</label></li>
-	<li><label><input type="checkbox" name="movie" value="movie" checked="checked" />Nom de film</label></li>
+	<li><label><input type="radio" name="filter" value="author" />Nom de personne</label></li>
+	<li><label><input type="radio" name="filter" value="theater" />Nom de cinéma</label></li>
+	<li><label><input type="radio" name="filter" value="movie" checked="checked" />Nom de film</label></li>
 </ul>
 <div id="search-word-zone" class="small-12">
 	<div id="search-bar" class="small-10">
@@ -15,16 +12,11 @@ Pour cela des filtres vous permettent de choisir si vous voulez faire une recher
 	</div>
 </div>
 
-<div id="movie-result">
-
-</div>
-
-<div id="theater-result">
-
-</div>
-
-<div id="person-result">
-
+<div id="results">
+	<div id="movie-results">
+	</div>
+	<div id="pagination-zone" class="small-12">
+	</div>
 </div>
 
 <div id="weekly-movies-zone" class="small-12">

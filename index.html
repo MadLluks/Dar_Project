@@ -14,14 +14,31 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/content.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/footer.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/search.css" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/slick.css"/>
     <link rel="stylesheet" type="text/css" href="stylesheets/login.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/movie.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/location.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/slick.css"/>
 
     <script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="bower_components/foundation/js/vendor/modernizr.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/connexion.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript" src="js/movie.js"></script>
+    <script type="text/javascript" src="js/location.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+      function initialize() {
+        var mapCanvas = document.getElementById('maps');
+        var mapOptions = {
+          center: new google.maps.LatLng(44.5403, -78.5463),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
+      }
+    </script>
 </head>
 <body>
     <div class="sticky">
@@ -41,8 +58,8 @@
               <a href="#">Profil</a>
               <ul class="dropdown">
                 <li><a href="#">Mon profil</a></li>
-                <li><a href="#">Mes favoris</a</li>
-                <li><a href="#">Mon historique</a</li>
+                <li><a href="#">Mes favoris</a></li>
+                <li><a href="#">Mon historique</a></li>
               </ul>
             </li>
           </ul>

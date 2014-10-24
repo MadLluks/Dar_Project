@@ -33,4 +33,72 @@
 			width: 100%;
 		}
 	}
+
+	p {
+		&.title {
+			@include font-title-size(18px);
+			text-align: center;
+		}
+	}
+}
+
+#results {
+	h1 {
+		@include font-title-size(30px);
+	}
+
+	p {
+		&.title {
+			@include font-title-size(20px);
+			margin-bottom: 10px;
+		}
+
+		&.actors-label,
+		&.productor-label {
+			@include font-title-size(15px);
+			color: rgb(127, 0, 0);
+			display: inline-block;
+			margin-bottom: 0px;
+		}
+
+		&.actors-value,
+		&.productor-value {
+			@include font-text-size(15px);
+			display: inline-block;
+			margin-bottom: 0px;
+		}
+	}
+
+	#movie-results {
+		.movie-result {
+			.showtime-btn {
+				@include button();
+				@include font-title-size(15px);
+				color: white !important;
+				font-size: 12px;
+				height: 30px;
+				width: 100px;
+				line-height: 25px;
+				margin-top: 10px;
+			}
+		}
+	}
+
+	#pagination-zone {
+		text-align: center;
+
+		a.pagination {
+			@include font-text-size(20px);
+			color: rgb(127, 0, 0);
+			margin-right: 5px;
+
+			&.active {
+				text-decoration: underline;
+				cursor: default;
+				color: black
+			}
+		}
+	}
+
+
 }

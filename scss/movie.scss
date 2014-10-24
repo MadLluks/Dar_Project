@@ -1,0 +1,29 @@
+@import "variables";
+
+#theater-list {
+	.theater {
+		text-align: center;
+		.title {
+			@include font-title-size(25px);
+			margin-bottom: 5px;
+		}	
+	}
+
+	.day {
+		@include font-title-size(15px);
+		color: rgb(127, 0, 0);
+		margin-bottom: 0px;
+	}
+
+	a {
+		@include font-text-size(15px);
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.hour-list {
+		margin-bottom: 10px;
+	}
+}
