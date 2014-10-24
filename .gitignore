@@ -12,3 +12,4 @@ server/RemoteSystemsTempFiles
 
 server/.classpath
 server/.settings/
+server/keys.properties
