@@ -16,7 +16,7 @@ import main.java.metier.apiHandlers.GmapsAPIHandler;
  */
 @WebServlet("/GmapsServlet")
 public class GmapsServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	
        
     /**
@@ -26,55 +26,53 @@ public class GmapsServlet extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// examples of working requests :
-		// http://localhost:8080/darserver/gmaps?origin=Toronto&destination=Montreal
-		// http://localhost:8080/darserver/gmaps?origin=rue de madrid,gif-sur-yvette&destination=17 rue de liné,paris
-		// http://localhost:8080/darserver/gmaps?origin=48.6917631,2.1018575&destination=paris
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// examples of working requests :
+	// http://localhost:8080/darserver/gmaps?origin=Toronto&destination=Montreal
+	// http://localhost:8080/darserver/gmaps?origin=rue de madrid,gif-sur-yvette&destination=17 rue de liné,paris
+	// http://localhost:8080/darserver/gmaps?origin=48.6917631,2.1018575&destination=paris
 		
-		String origin, destination, mode;
-		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		String jsonResp = "";
-		if(request.getParameter("origin") != null
-				&& request.getParameter("destination") != null){
-			if(request.getParameter("mode") != null)
-				mode = (String) request.getParameter("mode");
-			else
-				mode = "none";
+	String origin, destination, mode;
+	PrintWriter out = response.getWriter();
+	response.setContentType("application/json");
+	String jsonResp = "";
+	if(request.getParameter("origin") != null
+	   && request.getParameter("destination") != null){
+	    if(request.getParameter("mode") != null)
+		mode = (String) request.getParameter("mode");
+	    else
+		mode = "none";
 			
-			destination = (String) request.getParameter("destination");
-			origin = (String) request.getParameter("origin");
-			GmapsAPIHandler gmaps = GmapsAPIHandler.getInstance();			
-			
-			System.out.println(origin);
-			try{
-				if(mode == "none")
-					jsonResp = gmaps.findFastestDirection(origin, destination);
-				else
-					jsonResp = gmaps.doQuery(origin, destination, mode);
-				jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
-			}
-			catch(IOException e){
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				jsonResp = "{\"success\": false, \"error\": bad_request}";
-			}			
-		}
+	    destination = (String) request.getParameter("destination");
+	    origin = (String) request.getParameter("origin");
+	    GmapsAPIHandler gmaps = GmapsAPIHandler.getInstance();			
+	    try{
+		if(mode == "none")
+		    jsonResp = gmaps.findFastestDirection(origin, destination);
 		else
-			jsonResp = "{\"success\": false, \"error\": missing_parameter}";
+		    jsonResp = gmaps.doQuery(origin, destination, mode);
+		jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
+	    }
+	    catch(IOException e){
+		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		jsonResp = "{\"success\": false, \"error\": bad_request}";
+	    }			
+	}
+	else
+	    jsonResp = "{\"success\": false, \"error\": missing_parameter}";
 		
-		out.write(jsonResp);
-		out.close();
-		out.flush();	
-	}
+	out.write(jsonResp);
+	out.close();
+	out.flush();	
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
 
 }
