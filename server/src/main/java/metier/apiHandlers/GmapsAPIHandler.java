@@ -27,26 +27,33 @@ public class GmapsAPIHandler {
 	return gmaps;
     }
 	
-    public String doQuery(String origin, String destination, String mode) throws MalformedURLException, IOException{
-	String query = String.format("mode=%s&key=%s&origin=%s&destination=%s", 
-				     URLEncoder.encode(mode, URL_CHARSET),
-				     URLEncoder.encode(GMAPS_API_KEY, URL_CHARSET),
-				     URLEncoder.encode(origin, URL_CHARSET),
-				     URLEncoder.encode(destination, URL_CHARSET));
-	return executeQuery(query);	
+    public String doQuery(String origin, String destination, String mode, Integer arrival_time)
+    		throws MalformedURLException, IOException{
+    	String query;
+	
+		query = String.format("mode=%s&key=%s&origin=%s&destination=%s", 
+			     URLEncoder.encode(mode, URL_CHARSET),
+			     URLEncoder.encode(GMAPS_API_KEY, URL_CHARSET),
+			     URLEncoder.encode(origin, URL_CHARSET),
+			     URLEncoder.encode(destination, URL_CHARSET));
+		if(arrival_time != null)
+			query += String.format("&arrival_time=%s",
+				URLEncoder.encode(String.valueOf(arrival_time), URL_CHARSET));     
+		
+		return executeQuery(query);	
     }
 	
     /*
      * iterate over all modes (driving, walking, etc.) 
      * return the fastest complete direction
      */
-    public String findFastestDirection(String origin, String destination){
+    public String findFastestDirection(String origin, String destination, Integer arrival_time){
 	String response = "";
 	try {
-	    String query_driving = doQuery(origin, destination, "driving");
-	    String query_walking = doQuery(origin, destination, "walking");
-	    String query_bicycling = doQuery(origin, destination, "bicycling");
-	    String query_transit = doQuery(origin, destination, "transit");
+	    String query_driving = doQuery(origin, destination, "driving", arrival_time);
+	    String query_walking = doQuery(origin, destination, "walking", arrival_time);
+	    String query_bicycling = doQuery(origin, destination, "bicycling", arrival_time);
+	    String query_transit = doQuery(origin, destination, "transit", arrival_time);
 	    JSONObject json = new JSONObject(query_driving);
 			
 	    int d_driving = Integer.MAX_VALUE;

@@ -36,6 +36,7 @@ public class GmapsServlet extends HttpServlet {
 	// http://localhost:8080/darserver/gmaps?origin=48.6917631,2.1018575&destination=paris
 		
 	String origin, destination, mode;
+	Integer arrival_time = null;
 	PrintWriter out = response.getWriter();
 	response.setContentType("application/json");
 	String jsonResp = "";
@@ -45,15 +46,17 @@ public class GmapsServlet extends HttpServlet {
 		mode = (String) request.getParameter("mode");
 	    else
 		mode = "none";
-			
+	    if(request.getParameter("arrival_time") != null){
+	    	arrival_time = Integer.valueOf(request.getParameter("arrival_time"));
+	    }
 	    destination = (String) request.getParameter("destination");
 	    origin = (String) request.getParameter("origin");
 	    GmapsAPIHandler gmaps = GmapsAPIHandler.getInstance();			
 	    try{
 		if(mode == "none")
-		    jsonResp = gmaps.findFastestDirection(origin, destination);
+		    jsonResp = gmaps.findFastestDirection(origin, destination, arrival_time);
 		else
-		    jsonResp = gmaps.doQuery(origin, destination, mode);
+		    jsonResp = gmaps.doQuery(origin, destination, mode, arrival_time);
 		jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
 	    }
 	    catch(IOException e){
