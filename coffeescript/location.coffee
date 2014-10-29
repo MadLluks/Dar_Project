@@ -8,12 +8,13 @@ class window.LocationManager
 			console.log args
 
 		@theaterPosition = args
-		navigator.geolocation.getCurrentPosition(@.GetLocation)
+		navigator.geolocation.getCurrentPosition(@.GetLocation, @.GetLocationError, {timeout:6000})
+		return
 
 	@GetLocation: (position) =>
 		$.ajax
 			type: "GET"
-			url: "#{adress}/gmaps"
+			url: "#{address}/gmaps"
 			data:
 				origin: "#{position.coords.latitude},#{position.coords.longitude}"
 				destination: "#{@theaterPosition.lat}, #{@theaterPosition.long}"
@@ -46,3 +47,25 @@ class window.LocationManager
 
 			error: (err) ->
 				alert "location error"
+
+	@GetLocationError: (err) =>
+		if(err.code == 1) 
+    		alert("Error: Access is denied!");
+  		else if( err.code == 2)
+    		alert("Error: Position is unavailable!");
+		else
+			console.log "error"
+
+	@GetocationFromPlace: (coordinates) =>
+		$.ajax
+			type: "GET"
+			url: "https://maps.googleapis.com/maps/api/geocode/json"
+			data:
+				address: coordinates
+			success: (data) ->
+				if debug
+					console.log data
+				User.SetLocation data.results[0].geometry.location.lat, data.results[0].geometry.location.lng
+				$('#errorGeolocation').foundation('reveal', 'close');
+			error: (err) ->
+				console.log err

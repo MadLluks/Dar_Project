@@ -44,7 +44,7 @@ class window.Search
 
 		$.ajax
 			type: "GET"
-			url: "#{adress}/cinema"
+			url: "#{address}/cinema"
 			data:
 				action:"api_request"
 				type: "search"
@@ -53,33 +53,36 @@ class window.Search
 				page: page
 				count: count
 			success: (msg) ->
-				console.log msg
 				$("#results #movie-results").html("<h1>Résultats</h1>")
-				for movie in msg.result.feed.movie
-					element = "<div class=\"movie-result\">"
+				$("#search-error").remove
+				if(msg.result.feed.movie == undefined)
+					$("#results #movie-results").append "<div id=\"search-error\">Aucun film trouvé</div>"
+				else
+					for movie in msg.result.feed.movie
+						element = "<div class=\"movie-result\">"
 
-					title = movie.originalTitle
-					if movie.title != undefined
-						title = movie.title
-					if movie.productionYear == undefined
-						element += "<p class=\"title\">#{title}</p>"
-					else
-						element += "<p class=\"title\">#{title} (#{movie.productionYear})</p>"
-					if movie.castingShort != undefined && movie.castingShort.actors != undefined
-						element += "<p class=\"actors-label\">Acteurs : </p><p class=\"actors-value\">#{movie.castingShort.actors}</p><br/>"
-					if movie.castingShort != undefined && movie.castingShort.directors != undefined
-						element += "<p class=\"productor-label\">Directeur : </p><p class=\"productor-value\">#{movie.castingShort.directors}</p><br/>"
-					element += "<a href=\"#\" attr-code=\"#{movie.code}\" class=\"showtime-btn\">Voir les séances</a>"
-					element += "</div><hr/>"
-					$("#results #movie-results").append element
-				nbPage = Math.ceil( msg.result.feed.totalResults / msg.result.feed.count)
-				$("#results #pagination-zone").children().remove()
-				for i in [1...nbPage]
-					if i == msg.result.feed.page
-						isActive = "active"
-					else
-						isActive = ""
-					$("#results #pagination-zone").append "<a href=\"#\" class=\"pagination #{isActive}\" attr-id=\"#{i}\">#{i}</a>"
+						title = movie.originalTitle
+						if movie.title != undefined
+							title = movie.title
+						if movie.productionYear == undefined
+							element += "<p class=\"title\">#{title}</p>"
+						else
+							element += "<p class=\"title\">#{title} (#{movie.productionYear})</p>"
+						if movie.castingShort != undefined && movie.castingShort.actors != undefined
+							element += "<p class=\"actors-label\">Acteurs : </p><p class=\"actors-value\">#{movie.castingShort.actors}</p><br/>"
+						if movie.castingShort != undefined && movie.castingShort.directors != undefined
+							element += "<p class=\"productor-label\">Directeur : </p><p class=\"productor-value\">#{movie.castingShort.directors}</p><br/>"
+						element += "<a href=\"#\" attr-code=\"#{movie.code}\" class=\"showtime-btn\">Voir les séances</a>"
+						element += "</div><hr/>"
+						$("#results #movie-results").append element
+					nbPage = Math.ceil( msg.result.feed.totalResults / msg.result.feed.count)
+					$("#results #pagination-zone").children().remove()
+					for i in [1...nbPage]
+						if i == msg.result.feed.page
+							isActive = "active"
+						else
+							isActive = ""
+						$("#results #pagination-zone").append "<a href=\"#\" class=\"pagination #{isActive}\" attr-id=\"#{i}\">#{i}</a>"
 			error: (msg) ->
 				alert "error"
 
@@ -100,7 +103,7 @@ class window.Search
 
 		$.ajax
 			type: "GET"
-			url: "#{adress}/cinema"
+			url: "#{address}/cinema"
 			data:
 				action: "api_request"
 				type: "movielist"
@@ -113,7 +116,7 @@ class window.Search
 					for movie in msg.result.feed.movie
 						element = "<div class=\"movie\">"
 						element += "<p class=\"title\">#{movie.title}</p>"
-						element += "<img src=\"#{movie.poster.href}\"/>"
+						#element += "<img src=\"#{movie.poster.href}\"/>"
 						element += "</div>"
 						$(".weekly-movies").append(element)
 
@@ -126,6 +129,5 @@ class window.Search
 						)
 					)
 			error: (data, err) ->
-				if data.statusText.search(/NetworkError/) >= 0
-					response = "Impossible d'établir la connexion avec le serveur."
-					$(".weekly-movies").append "<p class=\"error\">#{response}</p>"
+				response = "Impossible d'établir la connexion avec le serveur."
+				$(".weekly-movies").append "<p class=\"error\">#{response}</p>"

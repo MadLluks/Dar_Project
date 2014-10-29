@@ -22,21 +22,24 @@ class window.MovieManager
 		@movienum = args["movienum"]
 		$.ajax
 			type: "GET"
-			url: "#{adress}/cinema"
+			url: "#{address}/cinema"
 			data:
 				action: "api_request"
 				type: "movie"	
 				code: @movienum
 			success: (msg) =>
 				@movieInfos = msg.result.movie
-				navigator.geolocation.getCurrentPosition(MovieManager.GetMovie)
+				navigator.geolocation.getCurrentPosition(@.GetMovie, @.GetMovie, {timeout:6000})
 			error: (err) ->
 				alert "une erreur est survenue lors de la requête sur les informations du film"
 
 	@GetMovie: (position) =>
+		if position.code == position.TIMEOUT
+			position.coords.latitude = 48.8534100
+			position.coords.longitude = 2.3488000
 		$.ajax
 			type: "GET"
-			url: "#{adress}/cinema"
+			url: "#{address}/cinema"
 			data:
 				action:"api_request"
 				type: "showtimelist"
@@ -53,8 +56,8 @@ class window.MovieManager
 					$("#movieInfos").append("<h2>#{@movieInfos.originalTitle}</h2>")
 				if @movieInfos.productionYear != undefined
 					$("#movieInfos>h1").append("<span> (#{@movieInfos.productionYear})</span>")
-				if @movieInfos.trailerEmbed != undefined
-					$("#movieInfos").append(@movieInfos.trailerEmbed)
+				###if @movieInfos.trailerEmbed != undefined
+					$("#movieInfos").append(@movieInfos.trailerEmbed)###
 
 				for theater in msg.result.feed.theaterShowtimes
 					base.append "<div class=\"theater small-6 columns\"></div>"

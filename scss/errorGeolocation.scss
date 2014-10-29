@@ -1,0 +1,46 @@
+@import "variables";
+
+#errorGeolocation {
+	background-color: $main-color-black;
+	border-radius: 15px;
+	padding: 10px;
+
+	&>div {
+		background-color: #fff;
+		padding: 10px;
+		border-radius: 15px;
+	}
+
+	h1 {
+		@include font-title-size(30px);
+		color: $main-color-red;
+	}
+
+	h2 {
+		@include font-title-size(20px);
+	}
+
+	input {
+		border: 2px #333 solid;
+		border-radius: 15px;
+	}
+
+	#errorGeoAdressSubmit {
+		background-color: $main-color-red;
+		color: white;
+		font-weight: bold;
+		padding-left: 10px;
+		padding-right: 10px;
+
+		border:2px #333 solid;
+		border-radius: 15px;
+
+		display: inline-block;
+
+		&:hover {
+			cursor: pointer;
+			background-color: $main-color-black;
+
+		}
+	}
+}

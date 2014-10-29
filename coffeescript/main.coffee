@@ -1,4 +1,23 @@
-adress = "http://test"
+address = "https://pacific-ravine-2341.herokuapp.com/"
+
+$('#loading-image').bind('ajaxStart', () ->
+    $(this).show()
+).bind('ajaxStop', () ->
+    $(this).hide()
+)
+
+$(document).on "click", "#errorGeoaddressSubmit", () ->
+	if $("#errorGeolocation input").val() != ""
+		LocationManager.GetocationFromPlace $("#errorGeolocation input").val()
+
+$(document).on "click", ".login-btn", () ->
+	LoginManager.GetPage()
+	return false
+
+$(document).on "click", "#valid-login-input", () ->
+	User.GetConnection $("#login-input").val(), $("#password-input").val()
+
+	return false
 
 class window.ViewManager
 	@Init: () =>
