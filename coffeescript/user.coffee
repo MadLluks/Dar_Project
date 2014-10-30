@@ -20,7 +20,7 @@ class window.User
 		bloc = 
 			"<div>
 				<h1>Une erreur est survenue</h1>
-				<h2>Nous n'avons pas réussi à vous géolocalisez.</h2>
+				<h2>Nous n'avons pas réussi à vous géolocaliser.</h2>
 				<p>Pour pouvoir continuer à utiliser notre site merci de bien vouloir
 				entrer le nom de votre ville ou son code postal.
 				Pour plus de précision vous pouvez également entrer une addresse.
@@ -46,8 +46,7 @@ class window.User
 	@GetConnection: (login, password) ->
 		$.ajax
 			type: "POST"
-			url: "#{address}user"
-			dataType: "json"
+			url: "#{address}/user"
 			data:
 				login: $("#login-input").val()
 				password: $("#password-input").val()

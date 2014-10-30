@@ -29,14 +29,11 @@ class window.MovieManager
 				code: @movienum
 			success: (msg) =>
 				@movieInfos = msg.result.movie
-				navigator.geolocation.getCurrentPosition(@.GetMovie, @.GetMovie, {timeout:6000})
+				@GetMovie()
 			error: (err) ->
 				alert "une erreur est survenue lors de la requête sur les informations du film"
 
-	@GetMovie: (position) =>
-		if position.code == position.TIMEOUT
-			position.coords.latitude = 48.8534100
-			position.coords.longitude = 2.3488000
+	@GetMovie: () =>
 		$.ajax
 			type: "GET"
 			url: "#{address}/cinema"
@@ -44,8 +41,8 @@ class window.MovieManager
 				action:"api_request"
 				type: "showtimelist"
 				movie: @movienum
-				lat: position.coords.latitude
-				long: position.coords.longitude
+				lat: User.latitude
+				long: User.longitude
 			success: (msg) =>
 				if debug
 					console.log msg.result.feed.theaterShowtimes
