@@ -18,7 +18,7 @@ import main.java.metier.apiHandlers.AlloCineAPIHandler;
 /**
  * Servlet implementation class CinemaServlet
  */
-@WebServlet("/CinemaServlet")
+
 public class CinemaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

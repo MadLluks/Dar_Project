@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dar Project</title>
 
-    <link href='stylesheets/fonts/Lobster-Regular.ttf />' rel='stylesheets' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=PT+Serif:700|Lobster' rel='stylesheet' type='text/css'>
+    <link href='stylesheets/fonts/Lobster-Regular.ttf' rel='stylesheets' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif:700|Lobster' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" type="text/css" href="stylesheets/app.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
@@ -50,15 +50,19 @@
     <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
       <ul class="title-area">
         <li class="name"></li>
-         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        <li class="name">
+          <a href="#"><span>Menu</span></a>
+        </li>
       </ul>
-
       <section class="top-bar-section">
         <!-- Right Nav Section -->
         <ul class="right">
-          <li><a href="#" class="viewmanager home">Accueil</a></li>
-          <li><a href="#" class="viewmanager login">Connexion</a></li>
+          <li>
+            <a href="#" class="viewmanager home">Accueil</a>
+          </li>
+          <li>
+            <a href="#" class="viewmanager login">Connexion</a>
+          </li>
           <li class="has-dropdown hide">
             <a href="#">Profil</a>
             <ul class="dropdown">
@@ -82,24 +86,23 @@
       <div id="content-block">
         <div id="header">
         </div>
-          
+
         <div id="content" class="large-12 medium-12 small-12 columns">
         </div>
       </div>
     </div>
-    <div id="footer" class="large-12 medium-12 small-12 columns">
+  </div>
+  <div id="footer" class="large-12 medium-12 small-12 columns">
 
-    </div>
   </div>
   <!-- close the off-canvas menu -->
   <a class="exit-off-canvas"></a>
 
   <div id="errorGeolocation" class="reveal-modal" data-reveal data-options="close_on_background_click:false">
-    
+
   </div>
-</div>
-</div>
 </body>
+
 <script type="text/javascript" src="bower_components/foundation/js/foundation/foundation.js"></script>
 <script type="text/javascript" src="bower_components/foundation/js/foundation/foundation.offcanvas.js"></script>
 <script type="text/javascript" src="bower_components/foundation/js/foundation/foundation.topbar.js"></script>
