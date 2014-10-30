@@ -1,0 +1,107 @@
+/* line 3, ../scss/content.scss */
+#content {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 15px;
+}
+/* line 6, ../scss/content.scss */
+#content #search-filter {
+  list-style: none;
+  margin: 0px;
+  width: 100%;
+  text-align: center;
+}
+/* line 13, ../scss/content.scss */
+#content #search-filter li {
+  display: inline-block;
+  margin-right: 1rem;
+}
+/* line 17, ../scss/content.scss */
+#content #search-filter li label {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 15px;
+  color: black;
+}
+/* line 21, ../scss/content.scss */
+#content #search-filter li label input {
+  margin-bottom: 0.5rem;
+  margin-right: 0.3rem;
+}
+/* line 29, ../scss/content.scss */
+#content #search-word-zone {
+  position: relative;
+  height: 50px;
+}
+/* line 33, ../scss/content.scss */
+#content #search-word-zone > div {
+  display: inline-block;
+  float: left;
+}
+/* line 38, ../scss/content.scss */
+#content #search-word-zone:before {
+  display: block;
+  height: 28px;
+  width: 28px;
+  content: "";
+  background-image: url("../images/loupe.png");
+  background-size: contain;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+/* line 53, ../scss/content.scss */
+#content #search-word-zone #search-word {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 16px;
+  height: 37px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border: 2px solid #333333;
+  box-shadow: 3px 3px 2px #888888;
+  margin: 0px;
+  padding-left: 35px;
+}
+/* line 66, ../scss/content.scss */
+#content #search-word-zone #search-button {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 16px;
+  height: 37px;
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 16px;
+  height: 37px;
+  color: white;
+  background-color: #7f0000;
+  border: 2px solid black;
+  display: inline-block;
+  border-radius: 10px;
+  box-shadow: 3px 3px 2px #888888;
+  text-align: center;
+  display: inline-block;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  box-shadow: 3px 3px 2px #888888;
+  text-align: center;
+}
+/* line 40, ../scss/_variables.scss */
+#content #search-word-zone #search-button:hover {
+  background-color: #333;
+  box-shadow: 1px 1px 2px #888888;
+}
+/* line 80, ../scss/content.scss */
+#content #search-word-zone #search-button span {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  color: white;
+  text-transform: capitalize;
+  vertical-align: middle;
+  line-height: 37px;
+}
+/* line 91, ../scss/content.scss */
+#content #loupe #image-loupe {
+  background-image: url("../images/loupe.png");
+}
