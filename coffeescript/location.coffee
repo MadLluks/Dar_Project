@@ -1,5 +1,9 @@
 debug = true
 
+$(document).on "keypress", "#errorGeoaddress", (e) ->
+	if e.keyCode == 13
+		$("#errorGeoaddressSubmit").click()
+
 class window.LocationManager
 	@theaterPosition = ""
 
@@ -8,15 +12,15 @@ class window.LocationManager
 			console.log args
 
 		@theaterPosition = args
-		navigator.geolocation.getCurrentPosition(@.GetLocation, @.GetLocationError, {timeout:6000})
+		@GetLocation()
 		return
 
-	@GetLocation: (position) =>
+	@GetLocation: () =>
 		$.ajax
 			type: "GET"
 			url: "#{address}/gmaps"
 			data:
-				origin: "#{position.coords.latitude},#{position.coords.longitude}"
+				origin: "#{User.latitude}, #{User.longitude}"
 				destination: "#{@theaterPosition.lat}, #{@theaterPosition.long}"
 			success: (msg) =>
 				console.log msg
@@ -30,8 +34,8 @@ class window.LocationManager
 
 				
 
-				x = (parseInt(position.coords.latitude) + parseInt(@theaterPosition.lat)) /2
-				y = (parseInt(position.coords.longitude) + parseInt(@theaterPosition.long)) /2
+				x = (parseInt(User.latitude) + parseInt(@theaterPosition.lat)) /2
+				y = (parseInt(User.longitude) + parseInt(@theaterPosition.long)) /2
 
 				mapCanvas = document.getElementById('maps')
 				mapOptions =
@@ -41,8 +45,39 @@ class window.LocationManager
 
 		        map = new google.maps.Map(mapCanvas, mapOptions)
 
+
 		        bounds.extend(bound1)
 				bounds.extend(bound2)
+
+				polyOptions = {
+				    strokeColor: '#7F0000'
+				    strokeOpacity: 1.0
+				    strokeWeight: 3				 
+				} 
+
+				poly = new google.maps.Polyline(polyOptions)
+
+				poly.setMap(map);
+
+				path = poly.getPath()
+
+				for step in msg.result.routes[0].legs[0].steps
+					path.push(new google.maps.LatLng(step.start_location.lat, step.start_location.lng))
+					path.push(new google.maps.LatLng(step.end_location.lat, step.end_location.lng))
+
+
+				new google.maps.Marker(
+					position: new google.maps.LatLng(msg.result.routes[0].legs[0].start_location.lat, msg.result.routes[0].legs[0].start_location.lng),
+					map: map,
+					title: 'Hello World!'
+				)
+
+				new google.maps.Marker(
+					position: new google.maps.LatLng(msg.result.routes[0].legs[0].end_location.lat, msg.result.routes[0].legs[0].end_location.lng),
+					map: map,
+					title: 'Hello World!'
+				)
+
 				map.fitBounds(bounds)
 
 			error: (err) ->
