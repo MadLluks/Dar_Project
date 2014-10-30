@@ -1,0 +1,13 @@
+/* line 4, ../scss/header.scss */
+#header h1 {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+}
+/* line 7, ../scss/header.scss */
+#header h2 {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 23px;
+  margin-bottom: 50px;
+}

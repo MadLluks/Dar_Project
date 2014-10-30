@@ -1,0 +1,48 @@
+/* line 3, ../scss/errorGeolocation.scss */
+#errorGeolocation {
+  background-color: #333333;
+  border-radius: 15px;
+  padding: 10px;
+}
+/* line 8, ../scss/errorGeolocation.scss */
+#errorGeolocation > div {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 15px;
+}
+/* line 14, ../scss/errorGeolocation.scss */
+#errorGeolocation h1 {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 30px;
+  color: #7f0000;
+}
+/* line 19, ../scss/errorGeolocation.scss */
+#errorGeolocation h2 {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 20px;
+}
+/* line 23, ../scss/errorGeolocation.scss */
+#errorGeolocation input {
+  border: 2px #333 solid;
+  border-radius: 15px;
+}
+/* line 28, ../scss/errorGeolocation.scss */
+#errorGeolocation #errorGeoAdressSubmit {
+  background-color: #7f0000;
+  color: white;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px #333 solid;
+  border-radius: 15px;
+  display: inline-block;
+}
+/* line 40, ../scss/errorGeolocation.scss */
+#errorGeolocation #errorGeoAdressSubmit:hover {
+  cursor: pointer;
+  background-color: #333333;
+}

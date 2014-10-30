@@ -1,0 +1,31 @@
+/* line 3, ../scss/main.scss */
+body {
+  background-color: #7f0000;
+}
+
+/* line 7, ../scss/main.scss */
+#main {
+  min-height: calc(100% - 50px);
+  position: relative;
+}
+
+/* line 12, ../scss/main.scss */
+#main-content {
+  padding-bottom: 50px;
+  background-color: white;
+  padding: 10px;
+  border-top-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  border: 2px solid #333;
+  margin-top: 5px;
+  margin-bottom: 40px;
+}
+
+/* line 24, ../scss/main.scss */
+p.error {
+  color: #7f0000 !important;
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 15px;
+}
