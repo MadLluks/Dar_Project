@@ -1,15 +1,18 @@
 # Don't know if we will modify foundation core
 # /bower_components/*
-/.sass-cache/*
+server/src/main/webapp/.sass-cache/*
 *.DS_Store
-/stylesheets/*
+server/src/main/webapp/stylesheets/*
 
 # Server Eclipse configuration
 server/.classpath
+server/tomcat.8080
 server/.metadata
 server/.settings
 server/RemoteSystemsTempFiles
-
+server/bin
+server/build
+server/target
 server/.classpath
 server/.settings/
 server/keys.properties
