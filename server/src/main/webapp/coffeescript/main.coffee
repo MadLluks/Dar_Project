@@ -1,4 +1,4 @@
-address = "https://pacific-ravine-2341.herokuapp.com"
+address = ""
 
 $('#loading-image').bind('ajaxStart', () ->
     $(this).show()

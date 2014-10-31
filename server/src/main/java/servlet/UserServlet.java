@@ -2,7 +2,7 @@ package main.java.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.util.Enumeration;
 import javax.servlet.ServletException;
 
 import javax.servlet.http.Cookie;
@@ -45,27 +45,37 @@ public class UserServlet extends HttpServlet {
 		}
 		// not logged in, can load login page
 		else
-			this.getServletContext().getRequestDispatcher( "/login.jsp" ).forward( request, response );
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/login.jsp" ).forward( request, response );
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = "";
+		String action = "unknown";
 		response.setContentType("application/json");
+		System.out.println("#########################################");
+		Enumeration params = request.getParameterNames(); 
+		while(params.hasMoreElements()){
+		    String paramName = (String)params.nextElement();
+		    System.out.println("Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
+		}
 		try{
 			action = request.getParameter("action");
 		}
 		catch(Exception e){
-			PrintWriter out = response.getWriter();					
-			out.print("{\"success\" : false, \"error\" : \"no_action_set\"}");
-			out.flush();
-			out.close();
-			return;
-	    }
+		    PrintWriter out = response.getWriter();					
+		    out.print("{\"success\" : false, \"error\" : \"no_action_set\"}");
+		    out.flush();
+		    out.close();
+		    return;
+		}
+		System.out.println("-----------------------");
+		System.out.println("ACTION : "+action);
+		System.out.println("-----------------------");
 		switch(action){
 			case "login":
+			    System.out.println("HERE IN LOGIN");
 				doLogin(request, response);
 				break;
 			case "register":

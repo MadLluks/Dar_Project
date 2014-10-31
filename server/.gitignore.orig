@@ -1,7 +1,61 @@
+<<<<<<< HEAD
+# Don't know if we will modify foundation core
+# /bower_components/*
+/.sass-cache/*
+*.DS_Store
+/stylesheets/*
+
+# Server Eclipse configuration
+server/.classpath
+server/.metadata
+server/.settings
+server/RemoteSystemsTempFiles
+
+server/.classpath
+server/.settings/
+server/keys.properties
+=======
 /bin
 /build
 /target/
+/target/
+<<<<<<< HEAD
+=======
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+>>>>>>> 2c6914f0d6a10c01f114d32622e4b6fd2c892a77
 <<<<<<< HEAD
 /target/
+/target/
+/target/
+/target/
 =======
->>>>>>> 30dfef1670b17f1746af699512195cf2db0677fc
+>>>>>>> parent of c07ef26... keep only needed files in web-inf
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+.metadata
+>>>>>>> 6f5a017ed72baeba877ed4b6a2834600e6320675

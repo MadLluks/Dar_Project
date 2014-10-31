@@ -54,38 +54,43 @@ public class GmapsAPIHandler {
 	    String query_walking = doQuery(origin, destination, "walking", arrival_time);
 	    String query_bicycling = doQuery(origin, destination, "bicycling", arrival_time);
 	    String query_transit = doQuery(origin, destination, "transit", arrival_time);
-	    JSONObject json = new JSONObject(query_driving);
-			
+
+	    JSONObject json = new JSONObject(query_driving);	    
 	    int d_driving = Integer.MAX_VALUE;
-	    if(json.get("status") == "OK")
-		d_driving = json.getJSONArray("routes").getJSONObject(0)
-		    .getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");			
-	    json = new JSONObject(query_walking);
-			
+	    if(json.getString("status").equals("OK"))
+	    	d_driving = json.getJSONArray("routes").getJSONObject(0)
+		    	.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");			
+//	    }
+//	    else{
+//		
+//	    }
+
+	    json = new JSONObject(query_walking);			
 	    int d_walking = Integer.MAX_VALUE;
-	    if(json.get("status") == "OK")
+	    if(json.getString("status").equals("OK"))
 		d_walking = json.getJSONArray("routes").getJSONObject(0)
 		    .getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
 			
-	    json = new JSONObject(query_bicycling);
-			
+	    json = new JSONObject(query_bicycling);			
 	    int d_bicycling = Integer.MAX_VALUE;
-	    if(json.get("status") == "OK")
+	    if(json.getString("status").equals("OK"))
 		d_bicycling = json.getJSONArray("routes").getJSONObject(0)
 		    .getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
 			
+	    json = new JSONObject(query_transit);
 	    int d_transit = Integer.MAX_VALUE;
-	    if(json.get("status") == "OK")
+	    if(json.getString("status").equals("OK"))
 		d_transit = json.getJSONArray("routes").getJSONObject(0)
 		    .getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
 			
+	    System.out.println(d_walking+" "+d_driving+" "+d_bicycling+" "+d_transit);
 	    if(d_driving < d_walking && d_driving < d_bicycling && d_driving < d_transit)
 		response = query_driving;
-	    if(d_walking <= d_driving && d_walking < d_bicycling && d_walking < d_transit)
+	    else if(d_walking <= d_driving && d_walking < d_bicycling && d_walking < d_transit)
 		response = query_walking;
-	    if(d_transit <= d_driving && d_transit < d_bicycling && d_transit < d_walking)
+	    else if(d_transit <= d_driving && d_transit < d_bicycling && d_transit < d_walking)
 		response = query_transit;
-	    if(d_bicycling <= d_walking && d_bicycling <= d_driving && d_bicycling <= d_transit)
+	    else if(d_bicycling <= d_walking && d_bicycling <= d_driving && d_bicycling <= d_transit)
 		response = query_bicycling;
 			
 	} catch (JSONException | IOException e) {
