@@ -31,7 +31,7 @@
   border-radius: 15px;
 }
 /* line 28, ../scss/errorGeolocation.scss */
-#errorGeolocation #errorGeoAdressSubmit {
+#errorGeolocation #errorGeoaddressSubmit {
   background-color: #7f0000;
   color: white;
   font-weight: bold;
@@ -42,7 +42,7 @@
   display: inline-block;
 }
 /* line 40, ../scss/errorGeolocation.scss */
-#errorGeolocation #errorGeoAdressSubmit:hover {
+#errorGeolocation #errorGeoaddressSubmit:hover {
   cursor: pointer;
   background-color: #333333;
 }
