@@ -1,3 +1,24 @@
+$(document).on "click", ".login-btn", () ->
+	ViewManger.Load "login"
+	return false
+
+$(document).on "click", "#valid-login-input", () ->
+	User.GetConnection $("#login-input").val(), $("#password-input").val()
+	return false
+
+$(document).on "click", "a.logout", () ->
+	document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+	User.Logout()
+	return false
+
+$(document).on "click", "a.register", () ->
+	ViewnManager.Load "register"
+	return false
+
+$(document).on "click", "#valid-register-input", () ->
+	User.Register $("#login-input").val(), $("#password-input").val()
+	return false
+
 class window.User
 	#//172.16.12.162/public
 	@latitude
@@ -37,22 +58,43 @@ class window.User
 		@latitude = latitude
 		@longitude = longitude
 
-	@GetConnection: (login, password) =>
-		LoginManager.GetConnection
-
-	@GetPage: () ->
-		ViewManager.Load("login")
-
 	@GetConnection: (login, password) ->
 		$.ajax
 			type: "POST"
 			url: "#{address}/user"
 			data:
-				login: $("#login-input").val()
-				password: $("#password-input").val()
+				action: "login"
+				login: login
+				password: password
 			success: (msg) ->
-				console.log msg
-				alert "success"
+				User.pseudo = login
+				ViewManager.Load("home")
 			error: (msg) ->
 				alert "error"
 
+	@Logout: () =>
+		document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+		User.pseudo = ""
+		$("#bar-login-btn").removeClass("hide")
+		$("#bar-register-btn").removeClass("hide")
+		$("#bar-profil-btn").addClass("hide")
+		ViewManager.Load("home")
+
+	@Register: (login, password) =>
+		$.ajax
+			type: "POST"
+			url: "#{address}/user"
+			data:
+				action: "register"
+				login: login
+				password: password
+			success: (msg) =>
+				@pseudo = login
+				@GetConnection login, password
+			error: (msg) ->
+				alert "error"
+
+
+	@IsConnected: () =>
+		if Cookie.isCreated()
+			return User.pseudo == Cookie.getUser()

@@ -11,3 +11,26 @@
   font-size: 23px;
   margin-bottom: 50px;
 }
+
+/* line 14, ../scss/header.scss */
+.title-area li {
+  line-height: 45px;
+}
+/* line 16, ../scss/header.scss */
+.title-area li .bar-title {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 23px;
+  color: white;
+  margin-left: 10px;
+}
+
+/* line 28, ../scss/header.scss */
+.top-bar-section a#bar-login-btn.hide {
+  display: none !important;
+}
+/* line 34, ../scss/header.scss */
+.top-bar-section a#bar-register-btn.hide {
+  display: none !important;
+}

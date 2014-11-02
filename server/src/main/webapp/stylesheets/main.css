@@ -29,3 +29,395 @@ p.error {
   color: black;
   font-size: 15px;
 }
+
+/* line 3, ../scss/footer.scss */
+#footer {
+  display: none;
+  background-color: #333333;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+}
+/* line 14, ../scss/footer.scss */
+#footer p {
+  margin: 0px;
+}
+
+/* line 4, ../scss/header.scss */
+#header h1 {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+}
+/* line 7, ../scss/header.scss */
+#header h2 {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 23px;
+  margin-bottom: 50px;
+}
+
+/* line 14, ../scss/header.scss */
+.title-area li {
+  line-height: 45px;
+}
+/* line 16, ../scss/header.scss */
+.title-area li .bar-title {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 23px;
+  color: white;
+  margin-left: 10px;
+}
+
+/* line 28, ../scss/header.scss */
+.top-bar-section a#bar-login-btn.hide {
+  display: none !important;
+}
+/* line 34, ../scss/header.scss */
+.top-bar-section a#bar-register-btn.hide {
+  display: none !important;
+}
+
+/* line 3, ../scss/content.scss */
+#content {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 15px;
+}
+/* line 6, ../scss/content.scss */
+#content #search-filter {
+  list-style: none;
+  margin: 0px;
+  width: 100%;
+  text-align: center;
+}
+/* line 13, ../scss/content.scss */
+#content #search-filter li {
+  display: inline-block;
+  margin-right: 1rem;
+}
+/* line 17, ../scss/content.scss */
+#content #search-filter li label {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 15px;
+  color: black;
+}
+/* line 21, ../scss/content.scss */
+#content #search-filter li label input {
+  margin-bottom: 0.5rem;
+  margin-right: 0.3rem;
+}
+/* line 29, ../scss/content.scss */
+#content #search-word-zone {
+  position: relative;
+  height: 50px;
+}
+/* line 33, ../scss/content.scss */
+#content #search-word-zone > div {
+  display: inline-block;
+  float: left;
+}
+/* line 38, ../scss/content.scss */
+#content #search-word-zone:before {
+  display: block;
+  height: 28px;
+  width: 28px;
+  content: "";
+  background-image: url("../images/loupe.png");
+  background-size: contain;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+/* line 53, ../scss/content.scss */
+#content #search-word-zone #search-word {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 16px;
+  height: 37px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border: 2px solid #333333;
+  box-shadow: 3px 3px 2px #888888;
+  margin: 0px;
+  padding-left: 35px;
+}
+/* line 66, ../scss/content.scss */
+#content #search-word-zone #search-button {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 16px;
+  height: 37px;
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 16px;
+  height: 37px;
+  color: white;
+  background-color: #7f0000;
+  border: 2px solid black;
+  display: inline-block;
+  border-radius: 10px;
+  box-shadow: 3px 3px 2px #888888;
+  text-align: center;
+  display: inline-block;
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  box-shadow: 3px 3px 2px #888888;
+  text-align: center;
+}
+/* line 40, ../scss/_variables.scss */
+#content #search-word-zone #search-button:hover {
+  background-color: #333;
+  box-shadow: 1px 1px 2px #888888;
+}
+/* line 80, ../scss/content.scss */
+#content #search-word-zone #search-button span {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  color: white;
+  text-transform: capitalize;
+  vertical-align: middle;
+  line-height: 37px;
+}
+/* line 91, ../scss/content.scss */
+#content #loupe #image-loupe {
+  background-image: url("../images/loupe.png");
+}
+
+/* line 3, ../scss/errorGeolocation.scss */
+#errorGeolocation {
+  background-color: #333333;
+  border-radius: 15px;
+  padding: 10px;
+}
+/* line 8, ../scss/errorGeolocation.scss */
+#errorGeolocation > div {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 15px;
+}
+/* line 14, ../scss/errorGeolocation.scss */
+#errorGeolocation h1 {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 30px;
+  color: #7f0000;
+}
+/* line 19, ../scss/errorGeolocation.scss */
+#errorGeolocation h2 {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 20px;
+}
+/* line 23, ../scss/errorGeolocation.scss */
+#errorGeolocation input {
+  border: 2px #333 solid;
+  border-radius: 15px;
+}
+/* line 28, ../scss/errorGeolocation.scss */
+#errorGeolocation #errorGeoaddressSubmit {
+  background-color: #7f0000;
+  color: white;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 2px #333 solid;
+  border-radius: 15px;
+  display: inline-block;
+}
+/* line 40, ../scss/errorGeolocation.scss */
+#errorGeolocation #errorGeoaddressSubmit:hover {
+  cursor: pointer;
+  background-color: #333333;
+}
+
+/* line 3, ../scss/location.scss */
+#maps {
+  height: 500px;
+}
+
+/* line 3, ../scss/login.scss */
+input[type="submit"] {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 16px;
+  height: 37px;
+  color: white;
+  background-color: #7f0000;
+  border: 2px solid black;
+  display: inline-block;
+  border-radius: 10px;
+  box-shadow: 3px 3px 2px #888888;
+  text-align: center;
+}
+/* line 40, ../scss/_variables.scss */
+input[type="submit"]:hover {
+  background-color: #333;
+  box-shadow: 1px 1px 2px #888888;
+}
+
+/* line 4, ../scss/movie.scss */
+#theater-list .theater {
+  text-align: center;
+}
+/* line 6, ../scss/movie.scss */
+#theater-list .theater .title {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+/* line 12, ../scss/movie.scss */
+#theater-list .day {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 15px;
+  color: #7f0000;
+  margin-bottom: 0px;
+}
+/* line 18, ../scss/movie.scss */
+#theater-list a {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 15px;
+}
+/* line 21, ../scss/movie.scss */
+#theater-list a:hover {
+  text-decoration: underline;
+}
+/* line 26, ../scss/movie.scss */
+#theater-list .hour-list {
+  margin-bottom: 10px;
+}
+
+/* line 3, ../scss/search.scss */
+#weekly-movies-zone {
+  border-top: solid 2px #333;
+  margin-top: 20px;
+}
+/* line 7, ../scss/search.scss */
+#weekly-movies-zone h2 {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 30px;
+  text-align: center;
+}
+/* line 12, ../scss/search.scss */
+#weekly-movies-zone .slick-prev:before, #weekly-movies-zone .slick-next:before {
+  color: #7f0000;
+}
+/* line 19, ../scss/search.scss */
+#weekly-movies-zone .weekly-movies div.movie p {
+  margin-bottom: 0px;
+  color: #7f0000;
+}
+/* line 28, ../scss/search.scss */
+#weekly-movies-zone .slick-slide {
+  height: 400px;
+}
+/* line 31, ../scss/search.scss */
+#weekly-movies-zone .slick-slide img {
+  max-height: 400px;
+  width: 100%;
+}
+/* line 38, ../scss/search.scss */
+#weekly-movies-zone p.title {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* line 46, ../scss/search.scss */
+#results h1 {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 30px;
+}
+/* line 51, ../scss/search.scss */
+#results p.title {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+/* line 56, ../scss/search.scss */
+#results p.actors-label, #results p.productor-label {
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 15px;
+  color: #7f0000;
+  display: inline-block;
+  margin-bottom: 0px;
+}
+/* line 64, ../scss/search.scss */
+#results p.actors-value, #results p.productor-value {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 15px;
+  display: inline-block;
+  margin-bottom: 0px;
+}
+/* line 74, ../scss/search.scss */
+#results #movie-results .movie-result .showtime-btn {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 16px;
+  height: 37px;
+  color: white;
+  background-color: #7f0000;
+  border: 2px solid black;
+  display: inline-block;
+  border-radius: 10px;
+  box-shadow: 3px 3px 2px #888888;
+  text-align: center;
+  font-family: 'Lobster', cursive !important;
+  src: url("fonts/Lobster-Regular.ttf");
+  color: black;
+  font-size: 15px;
+  color: white !important;
+  font-size: 12px;
+  height: 30px;
+  width: 100px;
+  line-height: 25px;
+  margin-top: 10px;
+}
+/* line 40, ../scss/_variables.scss */
+#results #movie-results .movie-result .showtime-btn:hover {
+  background-color: #333;
+  box-shadow: 1px 1px 2px #888888;
+}
+/* line 87, ../scss/search.scss */
+#results #pagination-zone {
+  text-align: center;
+}
+/* line 90, ../scss/search.scss */
+#results #pagination-zone a.pagination {
+  font-family: 'PT Serif', Serif !important;
+  color: black;
+  font-size: 20px;
+  color: #7f0000;
+  margin-right: 5px;
+}
+/* line 95, ../scss/search.scss */
+#results #pagination-zone a.pagination.active {
+  text-decoration: underline;
+  cursor: default;
+  color: black;
+}

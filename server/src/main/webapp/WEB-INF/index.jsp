@@ -13,24 +13,11 @@
 
     <link rel="stylesheet" type="text/css" href="stylesheets/app.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/header.css" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/content.css" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/footer.css" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/search.css" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/login.css"/>
-    <link rel="stylesheet" type="text/css" href="stylesheets/movie.css"/>
-    <link rel="stylesheet" type="text/css" href="stylesheets/location.css"/>
     <link rel="stylesheet" type="text/css" href="stylesheets/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="stylesheets/errorGeolocation.css"/>
 
     <script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="bower_components/foundation/js/vendor/modernizr.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-    <script type="text/javascript" src="js/connexion.js"></script>
-    <script type="text/javascript" src="js/search.js"></script>
-    <script type="text/javascript" src="js/movie.js"></script>
-    <script type="text/javascript" src="js/location.js"></script>
-    <script type="text/javascript" src="js/user.js"></script>
+    <script type="text/javascript" src="js/full.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
@@ -46,12 +33,11 @@
     </script>
 </head>
 <body>
-  <div class="sticky">
+  <div>
     <nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
       <ul class="title-area">
-        <li class="name"></li>
         <li class="name">
-          <a href="#"><span>Menu</span></a>
+          <a href="#"><span class="bar-title">Rihaninsta</span></a>
         </li>
       </ul>
       <section class="top-bar-section">

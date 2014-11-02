@@ -60,10 +60,6 @@ public class GmapsAPIHandler {
 	    if(json.getString("status").equals("OK"))
 	    	d_driving = json.getJSONArray("routes").getJSONObject(0)
 		    	.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");			
-//	    }
-//	    else{
-//		
-//	    }
 
 	    json = new JSONObject(query_walking);			
 	    int d_walking = Integer.MAX_VALUE;
@@ -83,7 +79,6 @@ public class GmapsAPIHandler {
 		d_transit = json.getJSONArray("routes").getJSONObject(0)
 		    .getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");
 			
-	    System.out.println(d_walking+" "+d_driving+" "+d_bicycling+" "+d_transit);
 	    if(d_driving < d_walking && d_driving < d_bicycling && d_driving < d_transit)
 		response = query_driving;
 	    else if(d_walking <= d_driving && d_walking < d_bicycling && d_walking < d_transit)

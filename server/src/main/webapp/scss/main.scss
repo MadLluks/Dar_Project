@@ -25,3 +25,13 @@ p.error {
 	color: rgb(127, 0, 0) !important;
 	@include font-title-size(15px);
 }
+
+@import 'footer';
+@import 'header';
+@import 'content';
+@import 'errorGeolocation';
+@import 'location';
+@import 'login';
+@import 'movie';
+@import 'search';
+

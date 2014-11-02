@@ -70,10 +70,10 @@ public class MovieServlet extends HttpServlet {
 			out.close();
 			return;
 		}
-		String title;
-		Float cine_lon, cine_lat;
-		String movie_id;
-		String name;
+		String title=null;
+		Float cine_lon=null, cine_lat=null;
+		String movie_id = null;
+		String name = null;
 		try{
 			title = request.getParameter("title");
 			movie_id = request.getParameter("movie_id");
@@ -84,7 +84,7 @@ public class MovieServlet extends HttpServlet {
 				throw new Exception(); 
 		}
 		catch(Exception e){
-			out.print("{\"success\" : false, \"error\" : \"missing_parameter\"}");
+			out.print("{\"success\" : false, \"error\" : \"missing_parameter\", \"detail\":\""+title+" "+movie_id+" "+cine_lon+" "+cine_lat+" "+name+"\"}");
 			out.flush();
 			out.close();
 			return;
@@ -92,10 +92,13 @@ public class MovieServlet extends HttpServlet {
 		
 		Cinema cine = new Cinema(name, cine_lat, cine_lon);
 		Movie m = new Movie(movie_id, title);
-		
-		if(!user.addSeenMovie(m,cine) || !user.save()){
-			out.print("{\"success\": false, \"error\": \"user_save_error\"}");
+		Boolean added = user.addSeenMovie(m,cine);
+		Boolean saved = user.save();
+		if(!added || !saved){
+			out.print("{\"success\": false, \"error\": \"user_save_error\", \"detail\":\""+added+" "+saved+" "+name+" "+cine_lat+" "+cine_lon+"\"}");
 			out.flush();
+			out.close();
+			return;
 		}
 		out.print("{\"success\" : true}");
 		out.flush();

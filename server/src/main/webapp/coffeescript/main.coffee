@@ -1,4 +1,4 @@
-address = ""
+address = "https://rihaninsta.herokuapp.com/"
 
 $('#loading-image').bind('ajaxStart', () ->
     $(this).show()
@@ -9,15 +9,6 @@ $('#loading-image').bind('ajaxStart', () ->
 $(document).on "click", "#errorGeoaddressSubmit", () ->
 	if $("#errorGeolocation input").val() != ""
 		LocationManager.GetocationFromPlace $("#errorGeolocation input").val()
-
-$(document).on "click", ".login-btn", () ->
-	LoginManager.GetPage()
-	return false
-
-$(document).on "click", "#valid-login-input", () ->
-	User.GetConnection $("#login-input").val(), $("#password-input").val()
-
-	return false
 
 class window.ViewManager
 	@Init: () =>
@@ -37,6 +28,11 @@ class window.ViewManager
 			return false
 
 	@Load: (pageName, args) ->
+		if User.IsConnected()
+			$("#bar-login-btn").addClass("hide")
+			$("#bar-register-btn").addClass("hide")
+			$("#bar-profil-btn").removeClass("hide")
+
 		if pageName != "home"
 			$("#header").children().remove()
 		$.get "./view/"+pageName+".html", (data) ->
@@ -45,4 +41,3 @@ class window.ViewManager
 		switch pageName
 			when "movie" then MovieManager.Init(args)
 			when "location" then LocationManager.Init(args)
-

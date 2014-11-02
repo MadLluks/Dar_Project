@@ -9,3 +9,31 @@
 		margin-bottom: 50px;
 	}
 }
+
+.title-area {
+	li {
+		line-height: 45px;
+		.bar-title {
+			@include font-title-size(23px);
+			color: white;
+
+			margin-left: 10px;
+		}
+	}
+}
+
+.top-bar-section {
+	a {
+		&#bar-login-btn {
+			&.hide {
+				display: none !important;
+			}
+		}
+
+		&#bar-register-btn {
+			&.hide {
+				display: none !important;
+			}
+		}
+	}
+}

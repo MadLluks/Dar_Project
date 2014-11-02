@@ -3,5 +3,6 @@ BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd $BASE_DIR
 
-coffee --watch --bare --compile --output ./js/ ./coffeescript &
+coffee -w -b -c -o ./js/ ./coffeescript &
+coffee -w -b --join ./js/full.js --compile ./coffeescript/*.coffee &
 compass watch &
