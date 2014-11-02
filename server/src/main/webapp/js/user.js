@@ -25,6 +25,10 @@ $(document).on("click", "#valid-register-input", function() {
   return false;
 });
 
+$(document).on("click", "#bar-profil-btn #history", function() {
+  return User.GetHistory();
+});
+
 window.User = (function() {
   function User() {}
 
@@ -113,6 +117,43 @@ window.User = (function() {
     if (Cookie.isCreated()) {
       return User.pseudo === Cookie.getUser();
     }
+  };
+
+  User.GetHistory = function() {
+    return $.ajax({
+      type: "GET",
+      url: "" + address + "/cinema",
+      data: {
+        action: "user_list",
+        type: "json"
+      },
+      success: function(msg) {
+        return console.log(msg);
+      },
+      error: function(err) {
+        return alert("error");
+      }
+    });
+  };
+
+  User.SaveMovie = function(args) {
+    return $.ajax({
+      type: "POST",
+      url: "" + address + "/movie",
+      data: {
+        title: args.movietitle,
+        movie_id: args.movieid,
+        cine_lon: args.long,
+        cine_lat: args.lat,
+        cine_name: args.theater
+      },
+      success: function(msg) {
+        return console.log(msg);
+      },
+      error: function(err) {
+        return alert("error");
+      }
+    });
   };
 
   return User;

@@ -5,9 +5,11 @@ $(document).on "click", ".hour-list a", () ->
 
 	args =
 		hour: $(@).html()
-		theater: theaterInfos.val()
+		theater: $(this).parents(".theater").children("p.title").html()
 		long: theaterInfos.attr "attr-long"
 		lat: theaterInfos.attr "attr-lat"
+		movieid: $("#movieInfos input").val()
+		movietitle: $("#movieInfos h1").html()
 
 	if debug
 		console.log args
@@ -56,23 +58,26 @@ class window.MovieManager
 				###if @movieInfos.trailerEmbed != undefined
 					$("#movieInfos").append(@movieInfos.trailerEmbed)###
 
-				for theater in msg.result.feed.theaterShowtimes
-					base.append "<div class=\"theater small-6 columns\"></div>"
-					currentElement = $(".theater").last()
-					
-					place = theater.place.theater
+				if msg.result.feed.theaterShowtimes != undefined
+					for theater in msg.result.feed.theaterShowtimes
+						base.append "<div class=\"theater small-6 columns\"></div>"
+						currentElement = $(".theater").last()
+						
+						place = theater.place.theater
 
-					currentElement.append "<input type=\"hidden\" value=\"#{place.code}\" attr-lat=\"#{place.geoloc.lat}\" attr-long=\"#{place.geoloc.long}\"/>"
-					currentElement.append "<p class=\"title\">#{place.name}</p>"
-					currentElement.append "<div class=\"seance\">"
+						currentElement.append "<input type=\"hidden\" value=\"#{place.code}\" attr-lat=\"#{place.geoloc.lat}\" attr-long=\"#{place.geoloc.long}\"/>"
+						currentElement.append "<p class=\"title\">#{place.name}</p>"
+						currentElement.append "<div class=\"seance\">"
 
-					for show in theater.movieShowtimes
-						for day in show.scr
-							showtime = "<p class=\"day\">#{day.d} (#{show.screenFormat.$}) : </p><div class=\"hour-list\">"
-							for hour in day.t
-								showtime += "<a href=\"#\">" + hour.$ + "</a> "
-							showtime += "</div>"
-							currentElement.append showtime
+						for show in theater.movieShowtimes
+							for day in show.scr
+								showtime = "<p class=\"day\">#{day.d} (#{show.screenFormat.$}) : </p><div class=\"hour-list\">"
+								for hour in day.t
+									showtime += "<a href=\"#\">" + hour.$ + "</a> "
+								showtime += "</div>"
+								currentElement.append showtime
+				else
+					base.append "<div>Aucune séances trouvées dans les cinémas alentour.</div>"
 
 			error: (data, err) ->
 				console.log data

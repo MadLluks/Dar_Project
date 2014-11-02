@@ -19,7 +19,8 @@ window.LocationManager = (function() {
       console.log(args);
     }
     LocationManager.theaterPosition = args;
-    LocationManager.GetLocation();
+    User.SaveMovie(args);
+    LocationManager.GetLocation(args);
   };
 
   LocationManager.GetLocation = function() {

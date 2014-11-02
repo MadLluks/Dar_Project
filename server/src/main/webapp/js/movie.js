@@ -8,9 +8,11 @@ $(document).on("click", ".hour-list a", function() {
   theaterInfos = $(this).parents(".theater").children("input");
   args = {
     hour: $(this).html(),
-    theater: theaterInfos.val(),
+    theater: $(this).parents(".theater").children("p.title").html(),
     long: theaterInfos.attr("attr-long"),
-    lat: theaterInfos.attr("attr-lat")
+    lat: theaterInfos.attr("attr-lat"),
+    movieid: $("#movieInfos input").val(),
+    movietitle: $("#movieInfos h1").html()
   };
   if (debug) {
     console.log(args);
@@ -75,44 +77,48 @@ window.MovieManager = (function() {
         /*if @movieInfos.trailerEmbed != undefined
         					$("#movieInfos").append(@movieInfos.trailerEmbed)
          */
-        _ref = msg.result.feed.theaterShowtimes;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          theater = _ref[_i];
-          base.append("<div class=\"theater small-6 columns\"></div>");
-          currentElement = $(".theater").last();
-          place = theater.place.theater;
-          currentElement.append("<input type=\"hidden\" value=\"" + place.code + "\" attr-lat=\"" + place.geoloc.lat + "\" attr-long=\"" + place.geoloc.long + "\"/>");
-          currentElement.append("<p class=\"title\">" + place.name + "</p>");
-          currentElement.append("<div class=\"seance\">");
-          _results.push((function() {
-            var _j, _len1, _ref1, _results1;
-            _ref1 = theater.movieShowtimes;
-            _results1 = [];
-            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-              show = _ref1[_j];
-              _results1.push((function() {
-                var _k, _l, _len2, _len3, _ref2, _ref3, _results2;
-                _ref2 = show.scr;
-                _results2 = [];
-                for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-                  day = _ref2[_k];
-                  showtime = "<p class=\"day\">" + day.d + " (" + show.screenFormat.$ + ") : </p><div class=\"hour-list\">";
-                  _ref3 = day.t;
-                  for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
-                    hour = _ref3[_l];
-                    showtime += "<a href=\"#\">" + hour.$ + "</a> ";
+        if (msg.result.feed.theaterShowtimes !== void 0) {
+          _ref = msg.result.feed.theaterShowtimes;
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            theater = _ref[_i];
+            base.append("<div class=\"theater small-6 columns\"></div>");
+            currentElement = $(".theater").last();
+            place = theater.place.theater;
+            currentElement.append("<input type=\"hidden\" value=\"" + place.code + "\" attr-lat=\"" + place.geoloc.lat + "\" attr-long=\"" + place.geoloc.long + "\"/>");
+            currentElement.append("<p class=\"title\">" + place.name + "</p>");
+            currentElement.append("<div class=\"seance\">");
+            _results.push((function() {
+              var _j, _len1, _ref1, _results1;
+              _ref1 = theater.movieShowtimes;
+              _results1 = [];
+              for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                show = _ref1[_j];
+                _results1.push((function() {
+                  var _k, _l, _len2, _len3, _ref2, _ref3, _results2;
+                  _ref2 = show.scr;
+                  _results2 = [];
+                  for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                    day = _ref2[_k];
+                    showtime = "<p class=\"day\">" + day.d + " (" + show.screenFormat.$ + ") : </p><div class=\"hour-list\">";
+                    _ref3 = day.t;
+                    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+                      hour = _ref3[_l];
+                      showtime += "<a href=\"#\">" + hour.$ + "</a> ";
+                    }
+                    showtime += "</div>";
+                    _results2.push(currentElement.append(showtime));
                   }
-                  showtime += "</div>";
-                  _results2.push(currentElement.append(showtime));
-                }
-                return _results2;
-              })());
-            }
-            return _results1;
-          })());
+                  return _results2;
+                })());
+              }
+              return _results1;
+            })());
+          }
+          return _results;
+        } else {
+          return base.append("<div>Aucune séances trouvées dans les cinémas alentour.</div>");
         }
-        return _results;
       },
       error: function(data, err) {
         console.log(data);

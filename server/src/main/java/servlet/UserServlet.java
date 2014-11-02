@@ -2,7 +2,6 @@ package main.java.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 import javax.servlet.ServletException;
 
 import javax.servlet.http.Cookie;
@@ -17,13 +16,13 @@ import main.java.beans.User;
 
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UserServlet() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public UserServlet() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,20 +30,7 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// check if user is logged in
 		User user = (User) request.getSession().getAttribute("user");
-		if(user != null){
-			//this.getServletContext().getRequestDispatcher( "/WEB-INF/index.jsp" ).forward( request, response );
-			// TODO REMOVE : test only
-//			Cinema c = new Cinema("Premier cinéma", 1.429504f, 2.504950f);
-//			user.addSeenMovie(new Movie("P111", "Le dernier des mohicans"), c);
-//			Movie m = new Movie("P222");
-//			Movie m2 = new Movie("P111");
-//			System.out.println(m.toJson());
-//			System.out.println(m2.toJson());
-//			Cinema c2 = new Cinema("Premier cinéma", 1.429504f, 2.504950f);
-//			System.out.println("C2 : "+c2.getExists());
-		}
-		// not logged in, can load login page
-		else
+		if(user == null)
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/login.jsp" ).forward( request, response );
 	}
 
@@ -53,44 +39,34 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = "unknown";
-		response.setContentType("application/json");
-		System.out.println("#########################################");
-		Enumeration params = request.getParameterNames(); 
-		while(params.hasMoreElements()){
-		    String paramName = (String)params.nextElement();
-		    System.out.println("Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
-		}
+		response.setContentType("application/json");			
 		try{
 			action = request.getParameter("action");
 		}
 		catch(Exception e){
-		    PrintWriter out = response.getWriter();					
-		    out.print("{\"success\" : false, \"error\" : \"no_action_set\"}");
-		    out.flush();
-		    out.close();
-		    return;
+			PrintWriter out = response.getWriter();					
+			out.print("{\"success\" : false, \"error\" : \"no_action_set\"}");
+			out.flush();
+			out.close();
+			return;
 		}
-		System.out.println("-----------------------");
-		System.out.println("ACTION : "+action);
-		System.out.println("-----------------------");
+
 		switch(action){
-			case "login":
-			    System.out.println("HERE IN LOGIN");
-				doLogin(request, response);
-				break;
-			case "register":
-				doRegister(request, response);
-				break;
-			default:
-				PrintWriter out = response.getWriter();
-				out.print("{\"success\" : false, \"error\" : \"unknown_action\"}");
-				out.flush();
-				out.close();
-				break;
-		}
-		
+		case "login":
+			doLogin(request, response);
+			break;
+		case "register":
+			doRegister(request, response);
+			break;
+		default:
+			PrintWriter out = response.getWriter();
+			out.print("{\"success\" : false, \"error\" : \"unknown_action\"}");
+			out.flush();
+			out.close();
+			break;
+		}		
 	}
-	
+
 	private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login,password;
 		String jsonResponse = "";
@@ -104,7 +80,7 @@ public class UserServlet extends HttpServlet {
 			out.flush();
 			out.close();
 			return;
-	    }
+		}
 		User user = new User();
 		if(user.load(login, password)){
 			request.getSession().setAttribute("user", user);
@@ -119,7 +95,7 @@ public class UserServlet extends HttpServlet {
 		out.flush();
 		out.close();
 	}
-	
+
 	private void doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login,password;
 		String jsonResponse = "";
@@ -132,7 +108,7 @@ public class UserServlet extends HttpServlet {
 			out.print("{\"success\" : false, \"error\" : \"missing_parameter\"}");
 			out.flush();
 			return;
-	    }
+		}
 		User user = new User(login, password);
 		if(user.load())
 			jsonResponse = "{\"success\" : false, error : \"login_exists\"}";		

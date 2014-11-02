@@ -19,6 +19,9 @@ $(document).on "click", "#valid-register-input", () ->
 	User.Register $("#login-input").val(), $("#password-input").val()
 	return false
 
+$(document).on "click", "#bar-profil-btn #history", () ->
+	User.GetHistory()
+
 class window.User
 	#//172.16.12.162/public
 	@latitude
@@ -98,3 +101,32 @@ class window.User
 	@IsConnected: () =>
 		if Cookie.isCreated()
 			return User.pseudo == Cookie.getUser()
+
+	@GetHistory: () =>
+		$.ajax
+			type: "GET"
+			url: "#{address}/cinema"
+			data:
+				action: "user_list"
+				type: "json"
+			success: (msg) =>
+				console.log msg
+
+			error: (err) =>
+				alert("error")
+
+	@SaveMovie: (args) =>
+		$.ajax
+			type: "POST"
+			url: "#{address}/movie"
+			data:
+				title: args.movietitle
+				movie_id: args.movieid
+				cine_lon: args.long
+				cine_lat: args.lat
+				cine_name: args.theater
+			success: (msg) =>
+				console.log msg
+			error: (err) =>
+				alert("error")
+

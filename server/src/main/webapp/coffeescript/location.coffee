@@ -12,7 +12,10 @@ class window.LocationManager
 			console.log args
 
 		@theaterPosition = args
-		@GetLocation()
+
+		User.SaveMovie(args)
+
+		@GetLocation(args)
 		return
 
 	@GetLocation: () =>

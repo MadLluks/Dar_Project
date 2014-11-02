@@ -47,14 +47,16 @@
             <a href="#" class="viewmanager home">Accueil</a>
           </li>
           <li>
-            <a href="#" class="viewmanager login">Connexion</a>
+            <a href="#" class="viewmanager login" id="bar-login-btn">Connexion</a>
           </li>
-          <li class="has-dropdown hide">
+          <li>
+            <a href="#" class="viewmanager register" id="bar-register-btn">S'inscrire</a>
+          </li>
+          <li class="has-dropdown hide" id="bar-profil-btn">
             <a href="#">Profil</a>
             <ul class="dropdown">
-              <li><a href="#">Mon profil</a></li>
-              <li><a href="#">Mes favoris</a></li>
               <li><a href="#">Mon historique</a></li>
+              <li><a href="#" class="logout">Me déconnecter</a></li>
             </ul>
           </li>
         </ul>
