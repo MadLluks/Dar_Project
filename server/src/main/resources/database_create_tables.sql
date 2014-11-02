@@ -55,5 +55,3 @@ CREATE TABLE seen_movie
 
 
 INSERT INTO user(login,password) VALUES('test','test');
-INSERT INTO user(login,password) VALUES('toto','titi');
-INSERT INTO movie VALUES('P222', 'Il était une fois');

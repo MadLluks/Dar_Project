@@ -28,19 +28,19 @@ public class GmapsAPIHandler {
     }
 	
     public String doQuery(String origin, String destination, String mode, Integer arrival_time)
-    		throws MalformedURLException, IOException{
+	throws MalformedURLException, IOException{
     	String query;
 	
-		query = String.format("mode=%s&key=%s&origin=%s&destination=%s", 
-			     URLEncoder.encode(mode, URL_CHARSET),
-			     URLEncoder.encode(GMAPS_API_KEY, URL_CHARSET),
-			     URLEncoder.encode(origin, URL_CHARSET),
-			     URLEncoder.encode(destination, URL_CHARSET));
-		if(arrival_time != null)
-			query += String.format("&arrival_time=%s",
-				URLEncoder.encode(String.valueOf(arrival_time), URL_CHARSET));     
+	query = String.format("mode=%s&key=%s&origin=%s&destination=%s", 
+			      URLEncoder.encode(mode, URL_CHARSET),
+			      URLEncoder.encode(GMAPS_API_KEY, URL_CHARSET),
+			      URLEncoder.encode(origin, URL_CHARSET),
+			      URLEncoder.encode(destination, URL_CHARSET));
+	if(arrival_time != null)
+	    query += String.format("&arrival_time=%s",
+				   URLEncoder.encode(String.valueOf(arrival_time), URL_CHARSET));     
 		
-		return executeQuery(query);	
+	return executeQuery(query);	
     }
 	
     /*
@@ -59,7 +59,7 @@ public class GmapsAPIHandler {
 	    int d_driving = Integer.MAX_VALUE;
 	    if(json.getString("status").equals("OK"))
 	    	d_driving = json.getJSONArray("routes").getJSONObject(0)
-		    	.getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");			
+		    .getJSONArray("legs").getJSONObject(0).getJSONObject("duration").getInt("value");			
 
 	    json = new JSONObject(query_walking);			
 	    int d_walking = Integer.MAX_VALUE;

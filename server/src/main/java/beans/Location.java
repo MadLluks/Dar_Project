@@ -25,7 +25,6 @@ public class Location extends AbstractBean{
 	save();
     }
 	
-	
     public Location(int loc_id) {
 	this.loc_id = loc_id;
 	conn = DBHandler.getInstance();
@@ -199,6 +198,4 @@ public class Location extends AbstractBean{
 	}
 	return success;
     }
-	
-
 }

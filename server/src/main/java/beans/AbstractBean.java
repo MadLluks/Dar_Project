@@ -20,5 +20,4 @@ public abstract class AbstractBean {
     protected abstract boolean update();
     protected abstract boolean insert();
     protected abstract boolean exists();
-	
 }

@@ -26,6 +26,7 @@ public class Cinema extends AbstractBean{
     public boolean getExists(){
 	return exists;
     }
+
     /*
      * Should be called with values retrieved from BD 
      */
@@ -127,17 +128,15 @@ public class Cinema extends AbstractBean{
 	PreparedStatement prestmt = null;
 	ResultSet res = null;
 	try {		
-	    System.out.println("Starting insert cinema : "+cine_name+" "+location.getLoc_id());
 	    prestmt = this.conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 	    prestmt.setString(1, cine_name);
 	    prestmt.setInt(2, location.getLoc_id());
 	    prestmt.executeUpdate();
 	    res = prestmt.getGeneratedKeys();
 	    this.cine_id = res.getInt(1);
-	    System.out.println("Cinema.java : "+cine_id);
 	    this.exists = true;
 	} catch (SQLException e) {
-	    System.out.println(e.getMessage());
+	    System.err.println(e.getMessage());
 	} finally{
 	    try {
 		if(res != null)
@@ -145,7 +144,7 @@ public class Cinema extends AbstractBean{
 		if(prestmt != null)
 		    prestmt.close();
 	    } catch (SQLException e) {
-		System.out.println(e.getMessage());
+		System.err.println(e.getMessage());
 	    }
 			
 	}

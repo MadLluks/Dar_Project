@@ -18,7 +18,7 @@ import main.java.beans.User;
  */
 
 public class MovieServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -27,83 +27,81 @@ public class MovieServlet extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json");
-		// Get movies saved by current user
-		User user = (User) request.getSession().getAttribute("user");
-		if(user != null){
-			String jsonResp = "";
-			ArrayList<Movie> movies = user.getSeenMovies();
-			for(Movie m : movies){
-				jsonResp += m.toJson()+", ";
-			}
-			jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
-			PrintWriter out = response.getWriter();
-			out.print(jsonResp);
-			out.flush();
-			out.close();
-		}
-		else{
-			PrintWriter out = response.getWriter();
-			out.print("{\"success\": false, \"error\": \"not_logged_in\"}");
-			out.flush();
-			out.close();
-		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Save movie for current user
-				
-		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");		
-		// user must be logged in
-		User user = (User) request.getSession().getAttribute("user");
-		if(user == null){
-			out.print("{\"success\" : false, \"error\" : \"login_required\"}");
-			out.flush();
-			out.close();
-			return;
-		}
-		String title=null;
-		Float cine_lon=null, cine_lat=null;
-		String movie_id = null;
-		String name = null;
-		try{
-			title = request.getParameter("title");
-			movie_id = request.getParameter("movie_id");
-			cine_lon = Float.valueOf(request.getParameter("cine_lon"));
-			cine_lat = Float.valueOf(request.getParameter("cine_lat"));
-			name = request.getParameter("cine_name");
-			if(name == null || cine_lat == null || cine_lon == null || title == null || movie_id == null)
-				throw new Exception(); 
-		}
-		catch(Exception e){
-			out.print("{\"success\" : false, \"error\" : \"missing_parameter\", \"detail\":\""+title+" "+movie_id+" "+cine_lon+" "+cine_lat+" "+name+"\"}");
-			out.flush();
-			out.close();
-			return;
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	response.setContentType("application/json");
+	// Get movies saved by current user
+	User user = (User) request.getSession().getAttribute("user");
+	if(user != null){
+	    String jsonResp = "";
+	    ArrayList<Movie> movies = user.getSeenMovies();
+	    for(Movie m : movies){
+		jsonResp += m.toJson()+", ";
 	    }
-		
-		Cinema cine = new Cinema(name, cine_lat, cine_lon);
-		Movie m = new Movie(movie_id, title);
-		Boolean added = user.addSeenMovie(m,cine);
-		Boolean saved = user.save();
-		if(!added || !saved){
-			out.print("{\"success\": false, \"error\": \"user_save_error\", \"detail\":\""+added+" "+saved+" "+name+" "+cine_lat+" "+cine_lon+"\"}");
-			out.flush();
-			out.close();
-			return;
-		}
-		out.print("{\"success\" : true}");
-		out.flush();
-		out.close();
-		
+	    jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
+	    PrintWriter out = response.getWriter();
+	    out.print(jsonResp);
+	    out.flush();
+	    out.close();
 	}
+	else{
+	    PrintWriter out = response.getWriter();
+	    out.print("{\"success\": false, \"error\": \"not_logged_in\"}");
+	    out.flush();
+	    out.close();
+	}
+    }
 
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	// Save movie for current user
+				
+	PrintWriter out = response.getWriter();
+	response.setContentType("application/json");		
+	// user must be logged in
+	User user = (User) request.getSession().getAttribute("user");
+	if(user == null){
+	    out.print("{\"success\" : false, \"error\" : \"login_required\"}");
+	    out.flush();
+	    out.close();
+	    return;
+	}
+	String title=null;
+	Float cine_lon=null, cine_lat=null;
+	String movie_id = null;
+	String name = null;
+	try{
+	    title = request.getParameter("title");
+	    movie_id = request.getParameter("movie_id");
+	    cine_lon = Float.valueOf(request.getParameter("cine_lon"));
+	    cine_lat = Float.valueOf(request.getParameter("cine_lat"));
+	    name = request.getParameter("cine_name");
+	    if(name == null || cine_lat == null || cine_lon == null || title == null || movie_id == null)
+		throw new Exception(); 
+	}
+	catch(Exception e){
+	    out.print("{\"success\" : false, \"error\" : \"missing_parameter\", \"detail\":\""+title+" "+movie_id+" "+cine_lon+" "+cine_lat+" "+name+"\"}");
+	    out.flush();
+	    out.close();
+	    return;
+	}
+		
+	Cinema cine = new Cinema(name, cine_lat, cine_lon);
+	Movie m = new Movie(movie_id, title);
+	Boolean added = user.addSeenMovie(m,cine);
+	Boolean saved = user.save();
+	if(!added || !saved){
+	    out.print("{\"success\": false, \"error\": \"user_save_error\", \"detail\":\""+added+" "+saved+" "+name+" "+cine_lat+" "+cine_lon+"\"}");
+	    out.flush();
+	    out.close();
+	    return;
+	}
+	out.print("{\"success\" : true}");
+	out.flush();
+	out.close();
+    }
 }

@@ -55,18 +55,16 @@ public class Movie extends AbstractBean{
 	    ResultSet res = null;
 	    exists = false;
 	    try {
-		System.out.println("Movie.java: About to select movie : "+movie_id);
 		String query = "SELECT title FROM movie WHERE movie_id = ?";
 		prestmt = this.conn.prepareStatement(query);
 		prestmt.setString(1, movie_id);
 		res = prestmt.executeQuery();
 		if(res.next()){
-		    System.out.println("Movie.java: result has next");
 		    this.title = res.getString("title");
 		    exists = true;
 		}			
 	    }catch(SQLException e){
-		System.out.println(e.getMessage());
+		System.err.println(e.getMessage());
 	    } finally{
 		try {
 		    if(res != null)
@@ -103,12 +101,10 @@ public class Movie extends AbstractBean{
 	
     @Override
     protected boolean insert(){
-	System.out.println("INSERTING MOVIE....");
 	modified = false;
 	String query = "INSERT INTO movie(movie_id,title) VALUES(?,?)";
 	PreparedStatement prestmt;
 	try {
-	    System.out.println("#-#-#-#-#-#-#-#-#-#-"+movie_id+" "+title);
 	    prestmt = this.conn.prepareStatement(query);
 	    prestmt.setString(1, movie_id);
 	    prestmt.setString(2, title);
@@ -116,7 +112,7 @@ public class Movie extends AbstractBean{
 	    prestmt.close();
 	    this.exists = true;
 	} catch (SQLException e) {
-	    System.out.println(e.getMessage());
+	    System.err.println(e.getMessage());
 	}
 	return this.exists;
     }
@@ -125,7 +121,6 @@ public class Movie extends AbstractBean{
     protected boolean update(){
 	boolean success = false;
 	modified = false;
-	//		cinema.save();
 	String query = "UPDATE movie SET title= ? WHERE movie_id = ?";			
 	PreparedStatement prestmt;
 	try {				
@@ -140,9 +135,4 @@ public class Movie extends AbstractBean{
 	}
 	return success;
     }
-
-    //	public Cinema getCinema() {
-    //		return this.cinema;
-    //	}
-
 }

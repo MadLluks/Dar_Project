@@ -29,11 +29,6 @@ public class GmapsServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	// examples of working requests :
-	// http://localhost:8080/darserver/gmaps?origin=Toronto&destination=Montreal
-	// http://localhost:8080/darserver/gmaps?origin=rue de madrid,gif-sur-yvette&destination=17 rue de liné,paris
-	// http://localhost:8080/darserver/gmaps?origin=48.6917631,2.1018575&destination=paris
-		
 	String origin, destination, mode;
 	Integer arrival_time = null;
 	PrintWriter out = response.getWriter();
@@ -41,16 +36,18 @@ public class GmapsServlet extends HttpServlet {
 	String jsonResp = "";
 	if(request.getParameter("origin") != null
 	   && request.getParameter("destination") != null){
+	    // if no mode was given by the user we'll find the best mode for him
 	    if(request.getParameter("mode") != null)
 		mode = (String) request.getParameter("mode");
 	    else
 		mode = "none";
-	    if(request.getParameter("arrival_time") != null){
+
+	    if(request.getParameter("arrival_time") != null)
 	    	arrival_time = Integer.valueOf(request.getParameter("arrival_time"));
-	    }
+
 	    destination = (String) request.getParameter("destination");
 	    origin = (String) request.getParameter("origin");
-	    GmapsAPIHandler gmaps = GmapsAPIHandler.getInstance();			
+	    GmapsAPIHandler gmaps = GmapsAPIHandler.getInstance();	
 	    try{
 		if(mode == "none")
 		    jsonResp = gmaps.findFastestDirection(origin, destination, arrival_time);
@@ -67,8 +64,8 @@ public class GmapsServlet extends HttpServlet {
 	    jsonResp = "{\"success\": false, \"error\": missing_parameter}";
 		
 	out.write(jsonResp);
+	out.flush();
 	out.close();
-	out.flush();	
     }
 
     /**

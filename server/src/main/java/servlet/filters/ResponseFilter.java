@@ -22,31 +22,29 @@ public class ResponseFilter implements Filter {
     public ResponseFilter() {
     }
 
-	/**
-	 * @see Filter#destroy()
-	 */
-	public void destroy() {
-	}
+    /**
+     * @see Filter#destroy()
+     */
+    public void destroy() {
+    }
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		if(response instanceof HttpServletResponse){
-			HttpServletResponse alteredResponse = ((HttpServletResponse)response);
-			alteredResponse.addHeader("Access-Control-Allow-Origin", "*");
-//			alteredResponse.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-//			alteredResponse.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
-//			alteredResponse.addHeader("Access-Control-Max-Age", "1728000");			
-		}
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
+    /**
+     * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+     */
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	if(response instanceof HttpServletResponse){
+	    HttpServletResponse alteredResponse = ((HttpServletResponse)response);
+	    // this should be removed if not running server on local
+	    alteredResponse.addHeader("Access-Control-Allow-Origin", "*");
 	}
+	// pass the request along the filter chain
+	chain.doFilter(request, response);
+    }
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-	}
+    /**
+     * @see Filter#init(FilterConfig)
+     */
+    public void init(FilterConfig fConfig) throws ServletException {
+    }
 
 }

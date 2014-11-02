@@ -138,9 +138,7 @@ public class User extends AbstractBean{
     public boolean addSeenMovie(Movie m, Cinema c){
 		
 	boolean res = c.save();
-	if(!res) System.out.println("/// cinema not saved /// ");
-	res = res && m.save();
-	if(!res) System.out.println("/// movie not saved /// ");
+	res = m.save() && res;
 	SeenMovie sm = new SeenMovie(m,c,this);
 	newlyAddedMovies.add(sm);
 	this.seenMovies.add(sm);
@@ -156,7 +154,6 @@ public class User extends AbstractBean{
 		    .prepareStatement("SELECT login FROM user WHERE login = ?");
 		prestmt.setString(1, login);
 		ResultSet res = prestmt.executeQuery();
-		//this.movie_id = movie_id;
 		if(res.next())
 		    exists = true;
 		res.close();
