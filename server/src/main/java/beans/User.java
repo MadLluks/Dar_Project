@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import main.java.beans.AbstractBean;
 import main.java.beans.Cinema;
@@ -101,6 +104,32 @@ public class User extends AbstractBean{
 		for(SeenMovie sm : seenMovies)
 			result.add(sm.getMovie());
 		return result;
+	}
+	
+	public ArrayList<SeenMovie> getSeenMoviesStrict(){
+		if(seenMovies.size() == 0){			
+			PreparedStatement prestmt;
+			try {
+				String query = "SELECT m.movie_id movie_id,m.title title,ms.cine_id cine_id FROM movie m, seen_movie ms, user u ";
+				query += "WHERE m.movie_id = ms.movie_id AND ms.login = u.login ";
+				query += "AND u.login = ?";
+				prestmt = this.conn.prepareStatement(query);
+				prestmt.setString(1, login);
+				ResultSet res = prestmt.executeQuery();
+				while(res.next()){
+					String id = res.getString("movie_id");
+					String title = res.getString("title");
+					int cine_id = res.getInt("cine_id");
+					seenMovies.add(new SeenMovie(new Movie(id, title), new Cinema(cine_id), this));
+				}
+				res.close();
+				prestmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return seenMovies;
 	}
 
 	public ArrayList<Cinema> getCinemaVisited(){
@@ -288,5 +317,40 @@ public class User extends AbstractBean{
 		public void setCinema(Cinema cinema) {
 			this.cinema = cinema;
 		}		
+	}
+
+	public String getHistory() {
+		String json = "";
+		HashMap<Cinema,ArrayList<Movie>> result = new HashMap<Cinema, ArrayList<Movie>>();
+		ArrayList<SeenMovie> movies = this.getSeenMoviesStrict();
+		for(SeenMovie m : movies){
+			if(result.containsKey(m.getCinema())){
+				ArrayList<Movie> values = result.get(m.getCinema());
+				values.add(m.getMovie());
+				result.put(m.getCinema(), values);
+			}
+			else {
+				ArrayList<Movie> values = new ArrayList<Movie>();
+				values.add(m.getMovie());
+				result.put(m.getCinema(), values);
+			}
+		}
+		Iterator<Entry<Cinema, ArrayList<Movie>>> it = result.entrySet().iterator();
+		boolean firstCine = true;
+		while(it.hasNext()){
+			String tmpJson = "";
+			Entry<Cinema, ArrayList<Movie>> e = it.next();
+			ArrayList<Movie> ms = e.getValue();
+			boolean firstMovie = true;
+			for(Movie m : ms){
+				if(!firstMovie) tmpJson += ",";
+				else firstMovie = false;
+				tmpJson += m.toJson();
+			}
+			if(!firstCine) json += ",";
+			else firstCine = false;
+			json += "{\"cinema\":"+e.getKey().toJson()+", \"movies\":"+tmpJson+"}";
+		}
+		return "["+json+"]";
 	}
 }

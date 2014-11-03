@@ -84,7 +84,7 @@ public class UserServlet extends HttpServlet {
 		User user = new User();
 		if(user.load(login, password)){
 			request.getSession().setAttribute("user", user);
-			jsonResponse = "{\"success\": true}";
+			jsonResponse = "{\"success\": true, \"result\":"+user.getHistory()+"}";
 			Cookie c = new Cookie("user", user.getLogin());
 			response.addCookie(c);
 		}

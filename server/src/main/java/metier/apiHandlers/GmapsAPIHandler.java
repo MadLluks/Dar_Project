@@ -15,7 +15,7 @@ import main.java.metier.PropertiesValues;
 
 public class GmapsAPIHandler {
 	private static final String GMAPS_API_KEY = PropertiesValues.getRessource("gmaps_api_key");
-	private static final String GMAPS_URL_QUERY = "https://maps.googleapis.com/maps/api/directions/json?";
+	private static final String GMAPS_URL_QUERY = "https://maps.googleapis.com/maps/api/directions/json?language=fr&";
 	private static final String URL_CHARSET = "UTF-8";
 	private static GmapsAPIHandler gmaps = null;
 	private GmapsAPIHandler(){}
