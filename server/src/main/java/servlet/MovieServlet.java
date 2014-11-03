@@ -43,7 +43,7 @@ public class MovieServlet extends HttpServlet {
 				else first = false;
 				jsonResp += m.toJson();
 			}
-			jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
+			jsonResp = "{\"success\": true, \"result\": ["+jsonResp+"]}";
 			response.setStatus(HttpServletResponse.SC_OK);
 			PrintWriter out = response.getWriter();
 			out.print(jsonResp);

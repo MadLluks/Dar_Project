@@ -66,7 +66,7 @@ public class CinemaServlet extends HttpServlet {
 				else first = false;
 				jsonResp += c.toJson();
 			}
-			jsonResp = "{\"success\": true, \"result\": "+jsonResp+"}";
+			jsonResp = "{\"success\": true, \"result\": ["+jsonResp+"]}";
 			response.setStatus(HttpServletResponse.SC_OK);
 			PrintWriter out = response.getWriter();
 			out.print(jsonResp);
