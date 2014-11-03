@@ -349,7 +349,7 @@ public class User extends AbstractBean{
 			}
 			if(!firstCine) json += ",";
 			else firstCine = false;
-			json += "{\"cinema\":"+e.getKey().toJson()+", \"movies\":"+tmpJson+"}";
+			json += "{\"cinema\":"+e.getKey().toJson()+", \"movies\": ["+tmpJson+"]}";
 		}
 		return "["+json+"]";
 	}
